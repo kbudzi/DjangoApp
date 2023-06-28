@@ -1,5 +1,7 @@
 import os
 from django.db import connection
+from decouple import config
+
 
 
 
@@ -10,14 +12,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'f9)+o5=$0p02n(_-i%kgt)lzh0mn+kzs=4$&#4y4b9gamqlh=p'
+SECRET_KEY=config('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG= config('DEBUG', default=False, cast=bool)
 
-#ALLOWED_HOSTS = ["www.eoffer.pl","eoffer.pl"]
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["www.eoffer.pl","eoffer.pl", 'localhost:8000']
+
 # Application definition
 
 INSTALLED_APPS = [

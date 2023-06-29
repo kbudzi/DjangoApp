@@ -16,7 +16,7 @@ SECRET_KEY=config('SECRET_KEY')
 
 DEBUG= config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ["www.eoffer.pl","eoffer.pl", 'localhost:8000']
+ALLOWED_HOSTS = ["www.eoffer.pl","eoffer.pl", "127.0.0.1"]
 
 # Application definition
 

@@ -8,11 +8,10 @@
     <link rel="stylesheet" href="{% static 'moj.css'%}">
 </head>
 <body>
-    <h1>Strona z kontrahentami</h1>
-    {% for kontrahent in kontrahenci %}
-        <h2>{{kontrahent.Nazwa}}</h2>
-        <p>{{kontrahent.email}}</p>
-    {% endfor %}
-    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ kontrahenci_form }}
+        <button type="submit">Dodaj kontrahenta</button>
+    </form>
 </body>
 </html>

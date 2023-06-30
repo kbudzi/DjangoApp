@@ -23,7 +23,7 @@ def nowy_kontrahent(request):
     if kontrahenci_form.is_valid():
         kontrahenci_form.save()
         return redirect(kontrahent)
-    return render(request, 'nowy_kontrahent.html',{'kontrahenci': kontrahent})
+    return render(request, 'nowy_kontrahent.html',{'kontrahenci_form': kontrahenci_form})
 
 def edytuj_kontrahent(request, id):
     kontrahenci = get_object_or_404(Kontrahent, pk=id)

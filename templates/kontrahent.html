@@ -9,9 +9,12 @@
 </head>
 <body>
     <h1>Strona z kontrahentami</h1>
+    <a href="{% url 'nowy_kontrahent' %}">Dodaj</a>
     {% for kontrahent in kontrahenci %}
         <h2>{{kontrahent.Nazwa}}</h2>
         <p>{{kontrahent.email}}</p>
+        <a href="{% url 'edytuj_kontrahenta' kontrahent.id %}">Edytuj</a>
+        <a href="{% url 'usun_kontrahenta' kontrahent.id %}">Usuń</a>
     {% endfor %}
     
 </body>

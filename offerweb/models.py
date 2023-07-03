@@ -1,10 +1,18 @@
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
+from address.models import AddressField
+
 
 
 class Kontrahent(models.Model):
-    Nazwa= models.CharField(max_length=32)
-    email = models.EmailField()
+    Nazwa= models.CharField(max_length=32, unique=True, null = False)
+    miejscowosc = models.CharField(max_length=32, blank=True)
+    ulica = AddressField(on_delete=models.CASCADE, blank=True,null = True)
+    email = models.EmailField(null=False)
+    tel = PhoneNumberField(blank=True, default = "+48 ")
     
+    
+
     def __str__(self):
         return self.Nazwa + ' (' + self.email+')'
     

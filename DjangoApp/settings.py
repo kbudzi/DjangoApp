@@ -4,7 +4,6 @@ from decouple import config
 
 
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -17,8 +16,9 @@ SECRET_KEY=config('SECRET_KEY')
 DEBUG= config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ["www.eoffer.pl","eoffer.pl", "127.0.0.1"]
-
+GOOGLE_API_KEY = 'AIzaSyD--your-google-maps-key-SjQBE'
 # Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -27,6 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "phonenumber_field",
+    'address',
     'offerweb'
 ]
 

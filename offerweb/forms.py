@@ -6,7 +6,7 @@ from address.models import AddressField
 class OfertaForm(ModelForm):
     class Meta:
         model = Oferty
-        fields = ['Uwagi',"kontrahenci"]
+        fields = ['Uwagi',"kontrahenci","status"]
 
 class KontrahentForm(ModelForm):
     class Meta:

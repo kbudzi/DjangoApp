@@ -17,7 +17,7 @@ class KontrahentAdmin(admin.ModelAdmin):
 @admin.register(Oferty)   
 class OfertyAdmin(admin.ModelAdmin):
     list_select_related = False
-    list_display = ["Uwagi",'kontrahenci','data']        
+    list_display = ["Uwagi",'kontrahenci','data','status']        
 
 admin.site.register(Indeksy)
 admin.site.register(Technologia)

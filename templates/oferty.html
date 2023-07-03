@@ -6,6 +6,14 @@
     <title>Document</title>
 </head>
 <body>
-    <h2>to będą moje filmy</h2>
+    <h2>Oferty:</h2>
+    <a href="{% url 'nowa_oferta' %}">Dodaj</a>
+    {% for oferta in oferty %}
+        <h2>{{oferta.Uwagi}}</h2>
+        <p>{{oferta.nr_zew}}</p>
+        <p>{{oferta.status}}</p>
+        <a href="{% url 'edytuj_oferte' oferta.id %}">Edytuj</a>
+        <a href="{% url 'usun_oferte' oferta.id %}">Usuń</a>
+    {% endfor %}
 </body>
 </html>

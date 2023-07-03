@@ -1,1 +1,3 @@
 python-decouple==3.8
+django-address
+phonenumber_field

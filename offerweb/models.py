@@ -10,7 +10,7 @@ class Kontrahent(models.Model):
     ulica = AddressField(on_delete=models.CASCADE, blank=True,null = True)
     email = models.EmailField(null=False)
     tel = PhoneNumberField(blank=True, default = "+48 ")
-
+    
     def __str__(self):
         return self.Nazwa + ' (' + self.email+')'
     
@@ -22,11 +22,21 @@ class Oferty(models.Model):
         (2, "opracowana"),
         (3, "wysłana"),
     }
+    
     Uwagi = models.TextField(default='')
     kontrahenci=models.ForeignKey(Kontrahent,on_delete=models.CASCADE)
     nr_zew = models.CharField(max_length=32)
     data = models.DateField(auto_now_add = True)
     status= models.PositiveBigIntegerField(default=0, choices=stat, blank=False,)
+    def __str__(self):
+        return self.numer_oferty()
+    def numer_oferty(self):
+            return "{} ({})".format(self.data, self.nr_zew)
+
+    
+    
+
+    
     
 class Indeksy(models.Model):
     mat={

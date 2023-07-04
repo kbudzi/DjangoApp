@@ -1,0 +1,18 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'moj.css'%}">
+</head>
+<body>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ oferta_form }}
+        
+        <button type="submit">Dodaj ofertę</button>
+    </form>
+</body>
+</html>

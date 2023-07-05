@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import Kontrahent , Oferty, Indeksy
-from .forms import KontrahentForm, OfertaForm
+from .forms import KontrahentForm, OfertaForm, IndeksForm
 
 
 def glowna(request):
@@ -22,13 +22,26 @@ def nowa_oferta(request):
         return redirect(wszystkie_oferty)
     return render(request, 'nowa_oferta.html',{'oferta_form': oferta_form})
 
-def edytuj_oferte(request, id):
+def edytuj_top_oferty(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
     oferta_form =OfertaForm(request.POST or None, instance=oferty)
+    indeksy = Indeksy.objects.filter(Oferta=oferty)
+    
     if oferta_form.is_valid():
         oferta_form.save()
         return redirect(wszystkie_oferty)
-    return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form})
+    return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form, 'indeksy':indeksy })
+
+def edytuj_oferte(request, id):
+    oferty = get_object_or_404(Oferty, pk=id)
+    oferta_form =OfertaForm(request.GET or None, instance=oferty)
+    indeksy = Indeksy.objects.filter(Oferta=oferty)
+    
+    if oferta_form.is_valid():
+        oferta_form.save()
+        return redirect(wszystkie_oferty)
+    return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form, 'indeksy':indeksy})
+    
 
 def usun_oferte(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
@@ -64,6 +77,11 @@ def usun_kontrahenta(request, id):
 
     return render(request, 'usun_kontrahenta.html',{'kontrahenci': kontrahenci})
 
-def indeksy (request):
-    indeksy = Indeksy.objects.all()
-    return render(request, 'edytuj_oferte.html',{"indeksy":indeksy})
+def nowy_indeks(request):
+    
+    indeksy_form =IndeksForm(request.POST or None)
+    if indeksy_form.is_valid():
+        indeksy_form.save()
+        
+        return redirect(request.META.get('HTTP_REFERER'))
+    return render(request, 'nowy_indeks.html',{'indeksy_form': indeksy_form})

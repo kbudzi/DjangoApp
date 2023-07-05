@@ -12,14 +12,19 @@
         {% csrf_token %}
         {{ oferta_form }}
         
-        <button type="submit">Dodaj ofertę</button>
-
-        {% for indeks in indeksy %}
-            <h2>{{indeks.indeks}}</h2>
-            <p>{{indeks.ilosc}}</p>
-        {% endfor %}
-
+        <button type="submit">Zapisz</button>
+        <a href="{% url 'nowy_indeks' %}">Dodaj</a>
     </form>
+    <h3>Indeksy:</h3>
+    {% for indeks in indeksy %}
+        <h3></h3>
+        <h3>Indeks: {{indeks.indeks}} - {{indeks.ilosc}}szt.</h3>
+        
+       
+        
+    {% endfor %}    
+
+    
     
 </body>
 </html>

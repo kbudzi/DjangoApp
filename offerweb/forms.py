@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import  Kontrahent, Oferty
+from .models import  Kontrahent, Oferty, Indeksy
 from address.models import AddressField
 
         
@@ -13,3 +13,8 @@ class KontrahentForm(ModelForm):
         model = Kontrahent
         fields = ['Nazwa','ulica','miejscowosc','email','tel',]
         ulica = AddressField()
+
+class IndeksForm(ModelForm):
+    class Meta:
+        model = Indeksy
+        fields = ['indeks','ilosc','czy_mat',"Oferta"]

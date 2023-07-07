@@ -35,13 +35,16 @@ def edytuj_top_oferty(request, id):
 def edytuj_oferte(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
     oferta_form =OfertaForm(request.GET or None, instance=oferty)
-    indeksy = Indeksy.objects.filter(Oferta=oferty)
-    
-    if oferta_form.is_valid():
-        oferta_form.save()
-        return redirect(wszystkie_oferty)
-    return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form, 'indeksy':indeksy})
-    
+    indeksy = Indeksy.objects.filter(Oferta=oferty) # lista indeksów dla danej oferty
+    indeksy_form = IndeksForm(request.GET or None)#instance=oferty
+
+    if all(oferta_form.is_valid(), indeksy_form.is_valid()):
+        oferta = oferta_form.save()
+        indeks = indeksy_form.save()
+        oferta.indeks = indeks
+        oferta.save()
+        return redirect(edytuj_oferte)
+    return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form, 'indeksy_form': indeksy_form, 'indeksy':indeksy})
 
 def usun_oferte(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
@@ -76,12 +79,3 @@ def usun_kontrahenta(request, id):
         return redirect (kontrahent)
 
     return render(request, 'usun_kontrahenta.html',{'kontrahenci': kontrahenci})
-
-def nowy_indeks(request):
-    
-    indeksy_form =IndeksForm(request.POST or None)
-    if indeksy_form.is_valid():
-        indeksy_form.save()
-        
-        return redirect(request.META.get('HTTP_REFERER'))
-    return render(request, 'nowy_indeks.html',{'indeksy_form': indeksy_form})

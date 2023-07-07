@@ -15,16 +15,20 @@
         <button type="submit">Zapisz</button>
         
     </form>
+    
+     <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ indeksy_form }}
+            <button type="submit" >Dodaj indeks</button>
+     </form>
+    
     <h3>Indeksy:</h3>
     {% for indeks in indeksy %}
         <h3></h3>
-        <h3>Indeks: {{indeks.indeks}} - {{indeks.ilosc}}szt.</h3>
-        
-       
-        
+        <h3>Indeks: {{indeks.indeks}} | {{indeks.ilosc}}</h3>
     {% endfor %}    
-
+   
     
-    
+    <a href="javascript:window.history.back();">Back</a>    
 </body>
 </html>

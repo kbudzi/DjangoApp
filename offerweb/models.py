@@ -1,6 +1,7 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from address.models import AddressField
+from django.urls import reverse
 
 
 
@@ -34,7 +35,8 @@ class Oferty(models.Model):
             return "{} ({})".format(self.data, self.nr_zew)
 
     
-    
+    def get_absolute_url(self):
+        return reverse('ofEdit', kwargs={'pk': self.pk})
 
     
     
@@ -43,11 +45,11 @@ class Indeksy(models.Model):
         (0, "Tak"),
         (1, "Nie")
     }
-    indeks= models.CharField(max_length=32)
-    ilosc = models.IntegerField()
-    Oferta=models.ForeignKey(Oferty,on_delete=models.CASCADE)
+    indeks= models.CharField(max_length=32,null=True)
+    ilosc = models.IntegerField(null=True, blank=True)
+    
     czy_mat = models.PositiveBigIntegerField(default=1, choices=mat)
-
+    Oferta=models.ForeignKey(Oferty,on_delete=models.CASCADE)
 class Operacje(models.Model):
     typ = {
         (0, "Zwykła"),

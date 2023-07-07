@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .models import Kontrahent , Oferty, Indeksy
 from .forms import KontrahentForm, OfertaForm, IndeksForm
+from django.urls import reverse
 
 
 def glowna(request):
@@ -36,14 +37,17 @@ def edytuj_oferte(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
     oferta_form =OfertaForm(request.GET or None, instance=oferty)
     indeksy = Indeksy.objects.filter(Oferta=oferty) # lista indeksów dla danej oferty
-    indeksy_form = IndeksForm(request.GET or None)#instance=oferty
+    indeksy_form = IndeksForm(request.POST or None)#instance=oferty
+    if request.method == 'POST':
+        if 'indeks' in request.POST:
+            indeks = indeksy_form.save(commit=False)
+            indeks.Oferta = oferty
+            indeks.save()
+            
+            t = "edytuj_oferte : %s"%(id)
+            return HttpResponse(t)
+            
 
-    if all(oferta_form.is_valid(), indeksy_form.is_valid()):
-        oferta = oferta_form.save()
-        indeks = indeksy_form.save()
-        oferta.indeks = indeks
-        oferta.save()
-        return redirect(edytuj_oferte)
     return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form, 'indeksy_form': indeksy_form, 'indeksy':indeksy})
 
 def usun_oferte(request, id):

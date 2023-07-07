@@ -17,4 +17,4 @@ class KontrahentForm(ModelForm):
 class IndeksForm(ModelForm):
     class Meta:
         model = Indeksy
-        fields = ['indeks','ilosc','czy_mat',"Oferta"]
+        fields = ['indeks','ilosc','czy_mat']

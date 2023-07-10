@@ -1,19 +1,17 @@
-{% load static%}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{% static 'moj.css'%}">
-</head>
-<body>
-    <form method="post" enctype="multipart/form-data">
+{% extends 'glowny.html' %}
+{% load bootstrap %}
+
+{% block tytul %} Oferty {% endblock %}
+
+{% block strona %}
+<a href="{% url 'oferty' %}">Powrót</a>
+<hr style="width:50%;text-align:left;margin-left:0">  
+    <form>
         {% csrf_token %}
-        {{ oferta_form }}
+        {{ oferta_form | bootstrap }}
         
         <button type="submit">Zapisz</button>
-        
+        <hr style="width:50%;text-align:left;margin-left:0">   
     </form>
     
      <form method="post" enctype="multipart/form-data">
@@ -26,9 +24,8 @@
     {% for indeks in indeksy %}
         <h3></h3>
         <h3>Indeks: {{indeks.indeks}} | {{indeks.ilosc}}</h3>
+        <a href="{% url 'usun_indeks' indeks.id %}">Usuń</a>
+        <hr style="width:50%;text-align:left;margin-left:0">  
+
     {% endfor %}    
-   
-    
-    <a href="javascript:window.history.back();">Back</a>    
-</body>
-</html>
+{% endblock %}

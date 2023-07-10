@@ -1,20 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'glowny.html' %}
+
+{% block tytul %} Usun indeks {% endblock %}
+
+{% block strona %}
+{% if user.is_authenticated %}
+    Witaj {{ user.username }}<br>
+    <a href="{% url 'logout' %}">Wyloguj</a>
+{% else %}
+    <a href="{% url 'login' %}">Zaloguj</a>
+{% endif %}
+<hr>
     <h2>Oferty:</h2>
     <a href="{% url 'nowa_oferta' %}">Dodaj</a>
     {% for oferta in oferty %}
-        <h2>{{oferta.Uwagi}}</h2>
+        <h3>{{oferta.Uwagi}}</h3>
         <p>{{oferta.nr_zew}}</p>
         <p>{{oferta.status}}</p>
         <a href="{% url 'edytuj_top_oferty' oferta.id %}">Edytuj nagłówek</a>
         <a href="{% url 'edytuj_oferte' oferta.id %}">Edytuj ofertę</a>
         <a href="{% url 'usun_oferte' oferta.id %}">Usuń</a>
     {% endfor %}
-</body>
-</html>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'glowny.html' %}
+
+{% block tytul %} Usun indeks {% endblock %}
+
+{% block strona %}
+
+
+<form method="post">
+    {% csrf_token %}  
+    {{ form }} 
+    <button type="submit">Zaloguj</button>
+    
+</form> 
+
+{% endblock %}

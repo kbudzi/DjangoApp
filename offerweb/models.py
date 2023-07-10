@@ -35,8 +35,7 @@ class Oferty(models.Model):
             return "{} ({})".format(self.data, self.nr_zew)
 
     
-    def get_absolute_url(self):
-        return reverse('ofEdit', kwargs={'pk': self.pk})
+ 
 
     
     

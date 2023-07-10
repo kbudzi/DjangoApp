@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "phonenumber_field",
     'address',
+    'bootstrapform',
     'offerweb'
 ]
 
@@ -117,3 +118,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = ['moje_static']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'oferty'
+LOGOUT_REDIRECT_URL = '/'

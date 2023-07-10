@@ -1,0 +1,11 @@
+{% extends 'glowny.html' %}
+
+{% block tytul %} Kontrahenci {% endblock %}
+
+{% block strona %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ indeksy_form }}
+    <button type="submit">Zapisz</button>
+
+{% endblock %}

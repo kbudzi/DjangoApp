@@ -1,0 +1,14 @@
+{% extends 'glowny.html' %}
+
+{% block tytul %} Usun indeks {% endblock %}
+
+{% block strona %}
+
+<h1>Czy na pewno chcesz usunąć indeks "{{ indeks.indeks }}"?</h1>
+<form method="post">
+    {% csrf_token %}   
+    <button type="submit">Usuń indeks</button>
+    
+</form> 
+
+{% endblock %}

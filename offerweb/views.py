@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from .models import Kontrahent , Oferty
-from .forms import KontrahentForm, OfertaForm
-
+from .models import Kontrahent , Oferty, Indeksy
+from .forms import KontrahentForm, OfertaForm, IndeksForm
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 def glowna(request):
     
@@ -16,20 +17,38 @@ def wszystkie_oferty(request):
     return render(request, 'oferty.html',{'oferty': oferty})
 
 def nowa_oferta(request):
-    kontrahenci_form =KontrahentForm(request.POST or None)
-    if kontrahenci_form.is_valid():
-        kontrahenci_form.save()
-        return redirect(kontrahent)
-    return render(request, 'nowy_kontrahent.html',{'kontrahenci_form': kontrahenci_form})
+    oferta_form =OfertaForm(request.POST or None)
+    if oferta_form.is_valid():
+        oferta_form.save()
+        return redirect(wszystkie_oferty)
+    return render(request, 'nowa_oferta.html',{'oferta_form': oferta_form})
 
+@login_required
+def edytuj_top_oferty(request, id):
+    oferty = get_object_or_404(Oferty, pk=id)
+    oferta_form =OfertaForm(request.POST or None, instance=oferty)
+    indeksy = Indeksy.objects.filter(Oferta=oferty)
+    
+    if oferta_form.is_valid():
+        oferta_form.save()
+        return redirect(wszystkie_oferty)
+    return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form, 'indeksy':indeksy })
+@login_required
 def edytuj_oferte(request, id):
-    kontrahenci = get_object_or_404(Kontrahent, pk=id)
-    kontrahenci_form =KontrahentForm(request.POST or None, instance=kontrahenci)
-    if kontrahenci_form.is_valid():
-        kontrahenci_form.save()
-        return redirect(kontrahent)
-    return render(request, 'nowy_kontrahent.html',{'kontrahenci_form': kontrahenci_form})
+    oferty = get_object_or_404(Oferty, pk=id)
+    oferta_form =OfertaForm(request.GET or None, instance=oferty)
+    indeksy = Indeksy.objects.filter(Oferta=oferty) # lista indeksów dla danej oferty
+    indeksy_form = IndeksForm(request.POST or None)#instance=oferty
+    if request.method == 'POST':
+        if 'indeks' in request.POST:
+            indeks = indeksy_form.save(commit=False)
+            indeks.Oferta = oferty
+            indeks.save()
+            
+            return HttpResponseRedirect(reverse("edytuj_oferte", args=[id]))
 
+    return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form, 'indeksy_form': indeksy_form, 'indeksy':indeksy})
+@login_required
 def usun_oferte(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
     if request.method == "POST":
@@ -55,7 +74,7 @@ def edytuj_kontrahent(request, id):
         kontrahenci_form.save()
         return redirect(kontrahent)
     return render(request, 'nowy_kontrahent.html',{'kontrahenci_form': kontrahenci_form})
-
+@login_required
 def usun_kontrahenta(request, id):
     kontrahenci = get_object_or_404(Kontrahent, pk=id)
     if request.method == "POST":
@@ -63,3 +82,12 @@ def usun_kontrahenta(request, id):
         return redirect (kontrahent)
 
     return render(request, 'usun_kontrahenta.html',{'kontrahenci': kontrahenci})
+@login_required
+def usun_indeks(request, id):
+    indeks = get_object_or_404(Indeksy, pk=id)
+    oferta_id = indeks.Oferta.id
+    if request.method == "POST":
+        indeks.delete()
+        #return redirect (wszystkie_oferty)
+        return redirect("edytuj_oferte", id=oferta_id)
+    return render(request, 'usun_indeks.html',{'indeks': indeks})

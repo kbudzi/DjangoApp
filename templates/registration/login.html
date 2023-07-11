@@ -5,11 +5,19 @@
 {% block strona %}
 
 
-<form method="post">
-    {% csrf_token %}  
-    {{ form }} 
-    <button type="submit">Zaloguj</button>
-    
-</form> 
 
+
+<div class="card" style="width: 18rem;">
+    
+    <div class="card-body">
+    <h5 class="card-title">Zaloguj się</h5>
+        <form method="post">
+            {% csrf_token %}  
+            {{ form }} 
+            <hr>
+            <button type="submit"class="btn btn-primary">Zaloguj <i class="fa-solid fa-right-to-bracket"></i></button>
+        
+        </form>
+    </div>
+  </div>
 {% endblock %}

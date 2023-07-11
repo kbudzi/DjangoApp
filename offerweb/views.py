@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .models import Kontrahent , Oferty, Indeksy
@@ -21,6 +21,7 @@ def nowa_oferta(request):
     if oferta_form.is_valid():
         oferta_form.save()
         return redirect(wszystkie_oferty)
+        
     return render(request, 'nowa_oferta.html',{'oferta_form': oferta_form})
 
 @login_required
@@ -32,7 +33,7 @@ def edytuj_top_oferty(request, id):
     if oferta_form.is_valid():
         oferta_form.save()
         return redirect(wszystkie_oferty)
-    return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form, 'indeksy':indeksy })
+    return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form, 'indeksy':indeksy})
 @login_required
 def edytuj_oferte(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
@@ -60,11 +61,20 @@ def kontrahent(request):
     kontrahenci = Kontrahent.objects.all()
     return render(request, 'kontrahent.html',{"kontrahenci":kontrahenci})
 
+
 def nowy_kontrahent(request):
     kontrahenci_form =KontrahentForm(request.POST or None)
+    
+    
     if kontrahenci_form.is_valid():
         kontrahenci_form.save()
-        return redirect(kontrahent)
+        return redirect('/')
+        
+        #try:
+        #    return redirect(edytuj_oferte)
+        #except :
+        #    return redirect(kontrahent)
+        
     return render(request, 'nowy_kontrahent.html',{'kontrahenci_form': kontrahenci_form})
 
 def edytuj_kontrahent(request, id):

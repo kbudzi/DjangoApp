@@ -5,14 +5,18 @@
 
 {% block strona %}
 <a href="{% url 'oferty' %}">Powrót</a>
-<hr style="width:50%;text-align:left;margin-left:0">  
-    <form>
-        {% csrf_token %}
-        {{ oferta_form | bootstrap }}
-        
-        <button type="submit">Zapisz</button>
-        <hr style="width:50%;text-align:left;margin-left:0">   
-    </form>
+<hr style="width:50%;text-align:left;margin-left:2">  
+    <div class="card" style="width: 50rem;">
+        <div class="card-body">
+        <h5 class="card-title">Nagłówek oferty</h5>
+                <form>
+                    {% csrf_token %}
+                    {{ oferta_form | bootstrap }}
+                    <button type="submit">Zapisz</button>                
+                </form>
+        </div>
+    </div>
+    
     
      <form method="post" enctype="multipart/form-data">
         {% csrf_token %}

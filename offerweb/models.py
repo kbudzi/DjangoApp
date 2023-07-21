@@ -48,7 +48,7 @@ class Indeksy(models.Model):
     ilosc = models.IntegerField(null=True, blank=True)
     
     czy_mat = models.PositiveBigIntegerField(default=1, choices=mat)
-    Oferta=models.ForeignKey(Oferty,on_delete=models.CASCADE)
+    oferta=models.ForeignKey(Oferty,on_delete=models.CASCADE)
 class Operacje(models.Model):
     typ = {
         (0, "Zwykła"),

@@ -16,18 +16,22 @@
                 </form>
         </div>
     </div>
-    
-    
-     <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ indeksy_form }}
-            <button type="submit" >Dodaj indeks</button>
-     </form>
-    
-    <h3>Indeksy:</h3>
+    <hr style="width:50%;text-align:left;margin-left:2">  
+    <div class="card" style="width: 50rem;">
+        <div class="card-body">
+        <h5 class="card-title">Dodaj indeks</h5>
+                <form>
+                    {% csrf_token %}
+                    {{ indeksy_form | bootstrap }}
+                    <button type="submit">Zapisz</button>                
+                </form>
+        </div>
+    </div>   
+     
     {% for indeks in indeksy %}
         <h3></h3>
         <h3>Indeks: {{indeks.indeks}} | {{indeks.ilosc}}</h3>
+        <a href="{% url 'edytuj_indeks' indeks.id %}">edytuj</a>
         <a href="{% url 'usun_indeks' indeks.id %}">Usuń</a>
         <hr style="width:50%;text-align:left;margin-left:0">  
 

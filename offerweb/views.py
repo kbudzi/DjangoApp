@@ -38,7 +38,7 @@ def edytuj_top_oferty(request, id):
 def edytuj_oferte(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
     oferta_form =OfertaForm(request.GET or None, instance=oferty)
-    indeksy = Indeksy.objects.filter(Oferta=oferty) # lista indeksów dla danej oferty
+    indeksy = Indeksy.objects.filter(oferta=oferty) # lista indeksów dla danej oferty
     indeksy_form = IndeksForm(request.POST or None)#instance=oferty
     if request.method == 'POST':
         if 'indeks' in request.POST:
@@ -48,7 +48,7 @@ def edytuj_oferte(request, id):
             
             return HttpResponseRedirect(reverse("edytuj_oferte", args=[id]))
 
-    return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form, 'indeksy_form': indeksy_form, 'indeksy':indeksy})
+    return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form, 'indeksy':indeksy, 'indeksy_form':indeksy_form})
 @login_required
 def usun_oferte(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
@@ -60,7 +60,6 @@ def usun_oferte(request, id):
 def kontrahent(request):
     kontrahenci = Kontrahent.objects.all()
     return render(request, 'kontrahent.html',{"kontrahenci":kontrahenci})
-
 
 def nowy_kontrahent(request):
     kontrahenci_form =KontrahentForm(request.POST or None)
@@ -95,9 +94,22 @@ def usun_kontrahenta(request, id):
 @login_required
 def usun_indeks(request, id):
     indeks = get_object_or_404(Indeksy, pk=id)
-    oferta_id = indeks.Oferta.id
+    oferta_id = indeks.oferta.id
     if request.method == "POST":
         indeks.delete()
         #return redirect (wszystkie_oferty)
         return redirect("edytuj_oferte", id=oferta_id)
     return render(request, 'usun_indeks.html',{'indeks': indeks})
+
+@login_required
+def edytuj_indeks(request, id):
+    indeks = get_object_or_404(Indeksy, pk=id)
+    oferta_id = indeks.oferta.id
+    indeksy_form = IndeksForm(request.POST or None, instance=indeks)
+    if indeksy_form.is_valid():
+        indeksy_form.save()
+        return redirect("edytuj_oferte", id=oferta_id)
+            
+        
+
+    return render(request, 'edytuj_indeks.html',{'indeksy_form':indeksy_form})

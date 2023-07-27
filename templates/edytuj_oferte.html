@@ -9,31 +9,44 @@
     <div class="card" style="width: 50rem;">
         <div class="card-body">
         <h5 class="card-title">Nagłówek oferty</h5>
-                <form>
+                
                     {% csrf_token %}
                     {{ oferta_form | bootstrap }}
-                    <button type="submit">Zapisz</button>                
+                    
                 </form>
         </div>
     </div>
     <hr style="width:50%;text-align:left;margin-left:2">  
-    <div class="card" style="width: 50rem;">
+    <div class="card" style="width: 50rem;" row="3"></div>
+    
         <div class="card-body">
         <h5 class="card-title">Dodaj indeks</h5>
-                <form>
+                <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ indeksy_form | bootstrap }}
-                    <button type="submit">Zapisz</button>                
+                    <button type="submit">Dodaj indeks</button>                
                 </form>
         </div>
     </div>   
      
     {% for indeks in indeksy %}
-        <h3></h3>
-        <h3>Indeks: {{indeks.indeks}} | {{indeks.ilosc}}</h3>
-        <a href="{% url 'edytuj_indeks' indeks.id %}">edytuj</a>
-        <a href="{% url 'usun_indeks' indeks.id %}">Usuń</a>
+        
+        
+        
         <hr style="width:50%;text-align:left;margin-left:0">  
-
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{indeks.indeks }}
+                
+              <span class="badge badge-primary badge-pill" style="color:blue">{{indeks.ilosc}} szt.</span>
+            </li> 
+        </ul> 
+              <a href="{% url 'edytuj_indeks' indeks.id %}">edytuj</a> <a href="{% url 'usun_indeks' indeks.id %}">Usuń</a>
+                
+            
+            
+            
+            
+          
     {% endfor %}    
 {% endblock %}

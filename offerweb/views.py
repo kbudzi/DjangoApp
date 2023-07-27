@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from .models import Kontrahent , Oferty, Indeksy
+from .models import Kontrahent , Oferty, Indeksy, Operacje
 from .forms import KontrahentForm, OfertaForm, IndeksForm
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -43,9 +43,8 @@ def edytuj_oferte(request, id):
     if request.method == 'POST':
         if 'indeks' in request.POST:
             indeks = indeksy_form.save(commit=False)
-            indeks.Oferta = oferty
+            indeks.oferta = oferty
             indeks.save()
-            
             return HttpResponseRedirect(reverse("edytuj_oferte", args=[id]))
 
     return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form, 'indeksy':indeksy, 'indeksy_form':indeksy_form})
@@ -113,3 +112,9 @@ def edytuj_indeks(request, id):
         
 
     return render(request, 'edytuj_indeks.html',{'indeksy_form':indeksy_form})
+
+
+@login_required
+def operacje(request):
+    operacje =Operacje.objects.all()
+    return render(request, 'operacje.html',{'operacje': operacje})

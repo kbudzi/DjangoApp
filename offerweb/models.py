@@ -59,4 +59,4 @@ class Operacje(models.Model):
     typ_operacji = models.PositiveBigIntegerField(default=0, choices=typ)
 
 class Technologia(models.Model):
-    operacja=models.ForeignKey(Operacje,on_delete=models.CASCADE)
+    operacja=models.ManyToManyField(Operacje, related_name='technologie')

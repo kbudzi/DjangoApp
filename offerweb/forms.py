@@ -1,13 +1,16 @@
 from django.forms import ModelForm
 from .models import  Kontrahent, Oferty, Indeksy
 from address.models import AddressField
+from django import forms
 
         
 class OfertaForm(ModelForm):
     class Meta:
         model = Oferty
         fields = ['nr_zew','Uwagi',"kontrahenci","status"]
-
+        widgets = {
+          'Uwagi': forms.Textarea(attrs={'rows':2, 'cols':15}),
+        }
 class KontrahentForm(ModelForm):
     class Meta:
         model = Kontrahent

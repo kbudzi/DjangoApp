@@ -1,0 +1,84 @@
+{% extends 'glowny.html' %}
+
+{% block tytul %} Operacje {% endblock %}
+{% block strona %}
+
+
+    <h2>Operacje:</h2>
+
+    <a href="{% url 'nowa_oferta' %}"><i class="fa-sharp fa-2x fa-solid fa-circle-plus"></i></a>
+
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Nazwa operacji</th>
+            <th scope="col">Stawka</th>
+            <th scope="col">Typ</th>
+          </tr>
+        </thead>
+        
+    {% for operacja in operacje %}
+    <tbody>
+          <tr>
+            <th scope="row">{{operacja.id}}</th>
+            <td>{{operacja.operacja}}</td>
+            <td>{{operacja.stawka}} zł.</td>
+            <td>{{operacja.typ_operacji}}</td>
+          </tr>
+        
+     {% endfor %}     
+        </tbody>
+      </table>
+        
+     
+      <html>
+        <head>
+            <style type="text/css">
+                .sidenav {
+                    height:100%;
+                    width:160px;
+                    position: fixed;
+                    z-index:1;
+                    top:0;
+                    left:0;
+                    background-color:#111;
+                    overflow-x: :hidden;
+                    padding-top:20px;
+                }
+         
+                .sidenav a {
+                    padding:6px 8px 6px 16px;
+                    text-decoration: none;
+                    font-size:25px;
+                    color: #818181;
+                    display:block;
+                }
+         
+                .sidenav a:hover{
+                    color:#f1f1f1;
+                }	
+         
+                .main{
+                    margin-left:160px;
+                    padding: 0px 10px;
+                }
+         
+            </style>
+            <title>{% block title %}Tim's Site{% endblock %}</title>
+        </head>
+         
+        <body>
+            <div class="sidenav">
+                <a href="/">Home</a>
+                <a href="/operacje">Operacje</a>
+                <a href="/2">View</a>
+            </div>
+         
+           
+         
+        </body>
+        </html>        
+   
+{% endblock %}

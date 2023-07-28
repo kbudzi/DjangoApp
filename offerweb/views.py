@@ -118,3 +118,8 @@ def edytuj_indeks(request, id):
 def operacje(request):
     operacje =Operacje.objects.all()
     return render(request, 'operacje.html',{'operacje': operacje})
+
+@login_required
+def wybierz_indeks(request):
+    operacje =Operacje.objects.all()
+    return render(request, 'operacje.html',{'operacje': operacje})

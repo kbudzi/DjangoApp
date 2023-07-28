@@ -34,11 +34,7 @@ class Oferty(models.Model):
     def numer_oferty(self):
             return "{} ({})".format(self.data, self.nr_zew)
 
-    
  
-
-    
-    
 class Indeksy(models.Model):
     mat={
         (0, "Tak"),

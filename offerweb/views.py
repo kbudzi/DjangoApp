@@ -5,6 +5,7 @@ from .models import Kontrahent , Oferty, Indeksy, Operacje
 from .forms import KontrahentForm, OfertaForm, IndeksForm
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.template import loader
 
 def glowna(request):
     
@@ -37,17 +38,26 @@ def edytuj_top_oferty(request, id):
 @login_required
 def edytuj_oferte(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
+    kontrahent = Kontrahent.objects.get(pk=oferty.kontrahenci.id)
+    #kontrahent = get_object_or_404(Kontrahent, pk=id)
     oferta_form =OfertaForm(request.GET or None, instance=oferty)
-    indeksy = Indeksy.objects.filter(oferta=oferty) # lista indeksów dla danej oferty
+    indeksy = Indeksy.objects.filter(oferta=oferty)
+    #kontrahent = Kontrahent.objects.filter(oferta=kontrahent) # lista indeksów dla danej oferty
     indeksy_form = IndeksForm(request.POST or None)#instance=oferty
     if request.method == 'POST':
         if 'indeks' in request.POST:
             indeks = indeksy_form.save(commit=False)
             indeks.oferta = oferty
+            indeks.kontrahent = kontrahent
             indeks.save()
             return HttpResponseRedirect(reverse("edytuj_oferte", args=[id]))
+    t=kontrahent.id
+    return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form, 'indeksy':indeksy, 'indeksy_form':indeksy_form, 't':t})
 
-    return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form, 'indeksy':indeksy, 'indeksy_form':indeksy_form})
+
+
+
+
 @login_required
 def usun_oferte(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
@@ -67,12 +77,6 @@ def nowy_kontrahent(request):
     if kontrahenci_form.is_valid():
         kontrahenci_form.save()
         return redirect('/')
-        
-        #try:
-        #    return redirect(edytuj_oferte)
-        #except :
-        #    return redirect(kontrahent)
-        
     return render(request, 'nowy_kontrahent.html',{'kontrahenci_form': kontrahenci_form})
 
 def edytuj_kontrahent(request, id):
@@ -82,6 +86,18 @@ def edytuj_kontrahent(request, id):
         kontrahenci_form.save()
         return redirect(kontrahent)
     return render(request, 'nowy_kontrahent.html',{'kontrahenci_form': kontrahenci_form})
+@login_required
+
+def indeksy_kontrahent(request, id):
+    kontrahenci = get_object_or_404(Kontrahent, pk=id)
+    indeksy = Indeksy.objects.filter(kontrahent=kontrahenci)
+    
+            
+    return render(request, 'wybierz_indeks.html',{'indeksy': indeksy})
+
+
+
+
 @login_required
 def usun_kontrahenta(request, id):
     kontrahenci = get_object_or_404(Kontrahent, pk=id)
@@ -119,7 +135,3 @@ def operacje(request):
     operacje =Operacje.objects.all()
     return render(request, 'operacje.html',{'operacje': operacje})
 
-@login_required
-def wybierz_indeks(request):
-    operacje =Operacje.objects.all()
-    return render(request, 'operacje.html',{'operacje': operacje})

@@ -15,7 +15,7 @@ class Kontrahent(models.Model):
     def __str__(self):
         return self.Nazwa + ' (' + self.email+')'
     
-
+    
 class Oferty(models.Model):
     stat={
         (0, "nowa"),
@@ -45,6 +45,8 @@ class Indeksy(models.Model):
     
     czy_mat = models.PositiveBigIntegerField(default=1, choices=mat)
     oferta=models.ForeignKey(Oferty,on_delete=models.CASCADE)
+    kontrahent=models.ForeignKey(Kontrahent, on_delete=models.CASCADE)
+
 class Operacje(models.Model):
     typ = {
         (0, "Zwykła"),

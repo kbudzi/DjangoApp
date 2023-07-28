@@ -24,7 +24,7 @@
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ indeksy_form | bootstrap }}
-                    <button type="submit">Dodaj nowy indeks</button>   <a href="{% url 'wybierz_indeks'%}">Wybierz indeks</a>             
+                    <button type="submit">Dodaj nowy indeks</button> <a href="{% url 'indeksy_kontrahent' t %}">wybierz</a>
                 </form>
         </div>
     </div>   

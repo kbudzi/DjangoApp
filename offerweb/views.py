@@ -90,7 +90,7 @@ def indeksy_kontrahent(request, id):
     indeksy = Indeksy.objects.filter(kontrahent=kontrahenci)
     #if request.method == 'GET':
     if request.method== "POST":
-        print(kontrahenci.id)
+        print(kontrahenci)
     elif request.method == "GET":
         return redirect(kontrahent)    
             

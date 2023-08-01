@@ -1,0 +1,14 @@
+{% extends 'glowny.html' %}
+
+{% block tytul %} Nowa operacja {% endblock %}
+
+{% block strona %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ operacje_form }}
+        
+        <button type="submit">Dodaj operację</button>
+       
+       </button>
+    </form>
+{% endblock %}

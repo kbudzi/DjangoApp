@@ -3,7 +3,7 @@
 {% block tytul %} Wybierz indeks {% endblock %}
 
 {% block strona %}
-<h2>Lista indeksów kontrahenta {{ kontrahent.nazwa }}</h2>
+<h3>Lista indeksów kontrahenta {{ kontrahenci.Nazwa }}</h3>
 {% for indeks in indeksy %}
         
         
@@ -11,14 +11,15 @@
 <hr style="width:50%;text-align:left;margin-left:0">  
 <ul class="list-group">
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        {{indeks.indeks }} <button type="submit">Dodaj indeks</button>
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{indeks.indeks }} <button type="submit" value="Add">Dodaj indeks</button>
+        </form>
         
- 
     </li> 
 </ul> 
 
-        
-    
+
     
     
     

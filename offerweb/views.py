@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .models import Kontrahent , Oferty, Indeksy, Operacje
-from .forms import KontrahentForm, OfertaForm, IndeksForm
+from .forms import KontrahentForm, OfertaForm, IndeksForm,OperacjeForm
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.template import loader
@@ -54,10 +54,6 @@ def edytuj_oferte(request, id):
     t=kontrahent.id
     return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form, 'indeksy':indeksy, 'indeksy_form':indeksy_form, 't':t})
 
-
-
-
-
 @login_required
 def usun_oferte(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
@@ -89,14 +85,16 @@ def edytuj_kontrahent(request, id):
 @login_required
 
 def indeksy_kontrahent(request, id):
+    #oferty = get_object_or_404(Oferty, pk=id)
     kontrahenci = get_object_or_404(Kontrahent, pk=id)
     indeksy = Indeksy.objects.filter(kontrahent=kontrahenci)
-    
+    #if request.method == 'GET':
+    if request.method== "POST":
+        print(kontrahenci.id)
+    elif request.method == "GET":
+        return redirect(kontrahent)    
             
-    return render(request, 'wybierz_indeks.html',{'indeksy': indeksy})
-
-
-
+    return render(request, 'wybierz_indeks.html',{'indeksy': indeksy, 'kontrahenci':kontrahenci})
 
 @login_required
 def usun_kontrahenta(request, id):
@@ -135,3 +133,19 @@ def operacje(request):
     operacje =Operacje.objects.all()
     return render(request, 'operacje.html',{'operacje': operacje})
 
+def dodaj_operacje(request):
+    operacje_form =OperacjeForm(request.POST or None)
+    
+    
+    if operacje_form.is_valid():
+        operacje_form.save()
+        return redirect('operacje')
+    return render(request, 'dodaj_operacje.html',{'operacje_form': operacje_form})
+
+def usun_operacje(request,id):
+    operacja = get_object_or_404(Operacje, pk=id)
+    if request.method == "POST":
+        operacja.delete()
+        return redirect ('operacje')
+
+    return render(request, 'usun_operacje.html',{'operacja': operacja})

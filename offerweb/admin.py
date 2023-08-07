@@ -19,6 +19,10 @@ class OfertyAdmin(admin.ModelAdmin):
     list_select_related = False
     list_display = ["Uwagi",'kontrahenci','data','status']        
 
-admin.site.register(Indeksy)
+@admin.register(Indeksy)
+class IndeksyAdmin(admin.ModelAdmin):
+    list_select_related = False
+    list_display = ['indeks','kontrahent'] 
+
 admin.site.register(Technologia)
 admin.site.register(Operacje)

@@ -1,6 +1,6 @@
 
 from django.urls import path
-from offerweb.views import wszystkie_oferty,nowa_oferta, glowna, indeksy_kontrahent,dodaj_operacje,usun_operacje ,edytuj_top_oferty,edytuj_oferte, operacje, kontrahent, nowy_kontrahent, edytuj_kontrahent, usun_kontrahenta, usun_oferte ,usun_indeks, edytuj_indeks
+from offerweb.views import wszystkie_oferty,nowa_oferta, glowna, indeksy_kontrahent,dodaj_operacje,usun_operacje,indeksy_oferta ,edytuj_top_oferty,edytuj_oferte, operacje, kontrahent, nowy_kontrahent, edytuj_kontrahent, usun_kontrahenta, usun_oferte ,usun_indeks, edytuj_indeks
 
 urlpatterns = [
     path('oferty/', wszystkie_oferty, name="oferty"),
@@ -13,6 +13,7 @@ urlpatterns = [
     path('nowy_kontrahent/', nowy_kontrahent, name ="nowy_kontrahent"),
     path('edytuj_kontrahent/<int:id>/', edytuj_kontrahent, name ="edytuj_kontrahenta"),
     path('edytuj_kontrahent/indeksy/<int:id>/', indeksy_kontrahent, name ="indeksy_kontrahent"), #id kontrahenta
+    path('edytuj_oferte/indeksy/<int:id>/', indeksy_oferta, name ="indeksy_oferta"), #id oferty
     path('usun_kontrahent/<int:id>/', usun_kontrahenta, name="usun_kontrahenta"),
 
     path('usun_indeks/<int:id>/', usun_indeks, name="usun_indeks"),
@@ -22,5 +23,7 @@ urlpatterns = [
     path('dodaj_operacje/', dodaj_operacje, name ="dodaj_operacje"),
     path('usun_operacje/<int:id>/', usun_operacje, name="usun_operacje"),
     
+    
+
     path('', glowna),
 ]

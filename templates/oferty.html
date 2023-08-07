@@ -7,7 +7,7 @@
     <a href="{% url 'nowa_oferta' %}"><i class="fa-sharp fa-2x fa-solid fa-circle-plus"></i></a>
     {% for oferta in oferty %}
         
-        <h4>{{oferta.nr_zew}} {{oferta.status}} {{oferta.Uwagi}} </h4>
+        <h4>{{oferta.nr_zew}} {{oferta.status}} {{oferta.Uwagi}} {{oferta.kontrahenci}}</h4>
         
         <a href="{% url 'edytuj_top_oferty' oferta.id %}"><i class="fa-solid fa-magnifying-glass"></i></a>
         <a href="{% url 'edytuj_oferte' oferta.id %}"><i class="fa-solid fa-pen-to-square"></i></a>

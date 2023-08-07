@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import  Kontrahent, Oferty, Indeksy, Operacje
+from .models import  Kontrahent, Oferty, Indeksy, Operacje, Technologia
 from address.models import AddressField
 from django import forms
 
@@ -26,5 +26,8 @@ class OperacjeForm(ModelForm):
     class Meta:
         model = Operacje
         fields = ['operacja','stawka','typ_operacji']
-
+class TechnologiaForm(ModelForm):
+    class Meta:
+        model = Technologia
+        fields = ['indeks','operacja']
       

@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from .models import Kontrahent , Oferty, Indeksy, Operacje
-from .forms import KontrahentForm, OfertaForm, IndeksForm,OperacjeForm
+from .models import Kontrahent , Oferty, Indeksy, Operacje, Technologia
+from .forms import KontrahentForm, OfertaForm, IndeksForm,OperacjeForm, TechnologiaForm
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.template import loader
+from simple_search import search_filter
 
 def glowna(request):
     
@@ -51,7 +52,8 @@ def edytuj_oferte(request, id):
             indeks.kontrahent = kontrahent
             indeks.save()
             return HttpResponseRedirect(reverse("edytuj_oferte", args=[id]))
-    t=kontrahent.id
+    #t=kontrahent.id
+    t=oferty.id
     return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form, 'indeksy':indeksy, 'indeksy_form':indeksy_form, 't':t})
 
 @login_required
@@ -85,16 +87,32 @@ def edytuj_kontrahent(request, id):
 @login_required
 
 def indeksy_kontrahent(request, id):
-    #oferty = get_object_or_404(Oferty, pk=id)
+    
     kontrahenci = get_object_or_404(Kontrahent, pk=id)
     indeksy = Indeksy.objects.filter(kontrahent=kontrahenci)
     #if request.method == 'GET':
     if request.method== "POST":
-        print(kontrahenci)
-    elif request.method == "GET":
-        return redirect(kontrahent)    
+        print(indeksy[2])
+    #elif request.method == "GET":
+     #   return redirect(kontrahent)    
             
     return render(request, 'wybierz_indeks.html',{'indeksy': indeksy, 'kontrahenci':kontrahenci})
+
+def indeksy_oferta(request, id):
+    oferty = get_object_or_404(Oferty, pk=id)
+    kontrahent = Kontrahent.objects.get(pk=oferty.kontrahenci.id)
+    indeksy = Indeksy.objects.filter(kontrahent=kontrahent)
+    indeksy_form = IndeksForm (request.POST or None)
+    if indeksy_form.is_valid():
+        indeksy_form.save()
+        return redirect(wszystkie_oferty)
+    
+    
+    print(indeksy)
+
+    return render(request, 'wybierz_indeks2.html',{'indeksy': indeksy, 'oferty':oferty, 'indeksy_form':indeksy_form})
+#def dodaj_do_bazy():
+        
 
 @login_required
 def usun_kontrahenta(request, id):
@@ -119,13 +137,15 @@ def edytuj_indeks(request, id):
     indeks = get_object_or_404(Indeksy, pk=id)
     oferta_id = indeks.oferta.id
     indeksy_form = IndeksForm(request.POST or None, instance=indeks)
+    technologia = Technologia.objects.filter(indeks=indeks)
+    technologia_form = TechnologiaForm(request.POST or None, instance=indeks)
     if indeksy_form.is_valid():
         indeksy_form.save()
         return redirect("edytuj_oferte", id=oferta_id)
             
         
 
-    return render(request, 'edytuj_indeks.html',{'indeksy_form':indeksy_form})
+    return render(request, 'edytuj_indeks.html',{'indeksy_form':indeksy_form,'technologia_form':technologia_form,'technologia':technologia})
 
 
 @login_required

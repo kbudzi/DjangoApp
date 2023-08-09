@@ -23,7 +23,7 @@
         <h5 class="card-title">Dodaj indeks</h5>
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ indeksy_form | bootstrap }}
+                    {{ indeksy_form | bootstrap}}
                     <button type="submit">Dodaj nowy indeks</button> <a href="{% url 'indeksy_kontrahent' t %}">wybierz</a> <a href="{% url 'indeksy_oferta' t %}">wybierz2</a>
                 </form>
         </div>

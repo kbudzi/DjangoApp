@@ -3,6 +3,7 @@ from .models import  Kontrahent, Oferty, Indeksy, Operacje, Technologia
 from address.models import AddressField
 from django import forms
 
+
         
 class OfertaForm(ModelForm):
     class Meta:
@@ -11,6 +12,7 @@ class OfertaForm(ModelForm):
         widgets = {
           'Uwagi': forms.Textarea(attrs={'rows':2, 'cols':15}),
         }
+
 class KontrahentForm(ModelForm):
     class Meta:
         model = Kontrahent

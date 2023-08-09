@@ -2,7 +2,7 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from address.models import AddressField
 from django.urls import reverse
-
+from .fields import OrderField
 
 
 class Kontrahent(models.Model):
@@ -33,7 +33,7 @@ class Oferty(models.Model):
         return self.numer_oferty()
     def numer_oferty(self):
             return "{} ({})".format(self.data, self.nr_zew)
-
+    order = OrderField()
  
 class Indeksy(models.Model):
     mat={

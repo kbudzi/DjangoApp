@@ -90,12 +90,7 @@ def indeksy_kontrahent(request, id):
     
     kontrahenci = get_object_or_404(Kontrahent, pk=id)
     indeksy = Indeksy.objects.filter(kontrahent=kontrahenci)
-    #if request.method == 'GET':
-    if request.method== "POST":
-        print(indeksy[2])
-    #elif request.method == "GET":
-     #   return redirect(kontrahent)    
-            
+    
     return render(request, 'wybierz_indeks.html',{'indeksy': indeksy, 'kontrahenci':kontrahenci})
 
 def indeksy_oferta(request, id):
@@ -103,13 +98,8 @@ def indeksy_oferta(request, id):
     kontrahent = Kontrahent.objects.get(pk=oferty.kontrahenci.id)
     indeksy = Indeksy.objects.filter(kontrahent=kontrahent)
     indeksy_form = IndeksForm (request.POST or None)
-    if indeksy_form.is_valid():
-        indeksy_form.save()
-        return redirect(wszystkie_oferty)
+   
     
-    
-    print(indeksy)
-
     return render(request, 'wybierz_indeks2.html',{'indeksy': indeksy, 'oferty':oferty, 'indeksy_form':indeksy_form})
 #def dodaj_do_bazy():
         

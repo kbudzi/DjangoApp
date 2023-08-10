@@ -1,0 +1,14 @@
+{% extends 'glowny.html' %}
+
+{% block tytul %} Dodaj indeks {% endblock %}
+
+{% block strona %}
+
+<h1>Czy na pewno chcesz dodać "{{ operacja.operacja }}"?</h1>
+<form method="post">
+    {% csrf_token %}   
+    <button type="submit">Usuń operację</button>
+    
+</form> 
+
+{% endblock %}

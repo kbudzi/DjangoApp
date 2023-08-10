@@ -96,7 +96,7 @@ def indeksy_kontrahent(request, id):
 def indeksy_oferta(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
     kontrahent = Kontrahent.objects.get(pk=oferty.kontrahenci.id)
-    ind = Indeksy.objects.all()
+    #ind = Indeksy.objects.all()
     indeksy = Indeksy.objects.filter(kontrahent=kontrahent)
     indeksy_form = IndeksForm (request.POST or None)
 
@@ -108,7 +108,12 @@ def indeksy_oferta(request, id):
     
     return render(request, 'wybierz_indeks2.html',{'indeksy': indeksy, 'oferty':oferty, 'indeksy_form':indeksy_form})
 #def dodaj_do_bazy():
-        
+@login_required
+def add_indeks(request, id):
+    indeksy = get_object_or_404(Indeksy, pk=id)
+    if request.method == "POST":
+        indeksy.delete()
+        return redirect (wszystkie_oferty)        
 
 @login_required
 def usun_kontrahenta(request, id):

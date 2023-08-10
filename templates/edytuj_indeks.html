@@ -6,6 +6,23 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ indeksy_form }}
-    <button type="submit">Zapisz</button>
+    <button type="submit" value="Add">Zapisz</button>
+    <button></button>
+</form>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ technologia_form }}
+    <button type="submit" value="Add">Zapisz</button>
+    <button></button>
+</form>
+{% for techno in technologia %}
+        
 
+        <form method="get" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{technologia.indeks }} <button type="indeks">Dodaj indeks</button>
+        </form>
+        
+
+{% endfor %}    
 {% endblock %}

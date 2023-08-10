@@ -1,0 +1,33 @@
+{% extends 'glowny.html' %}
+
+{% block tytul %} Wybierz indeks {% endblock %}
+
+{% block strona %}
+<h3>Lista indeksów kontrahenta {{ kontrahenci.Nazwa }}</h3>
+{% for indeks in indeksy %}
+        
+        
+        
+<hr style="width:50%;text-align:left;margin-left:0">  
+<ul class="list-group">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{indeks.indeks }} 
+        {{indeks.id }}
+        <button type="submit" >Dodaj indeks</button>
+        </form>
+        
+        
+    </li> 
+</ul> 
+
+
+
+
+  
+    
+    
+  
+{% endfor %}    
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'glowny.html' %}
+
+{% block tytul %} Wybierz indeks {% endblock %}
+{{ indeksy_form | bootstrap }}
+{% block strona %}
+<h3>Lista indeksów kontrahenta {{ kontrahenci.Nazwa }}</h3>
+
+{{ go.indeks }}
+
+
+    
+    
+    
+  
+ 
+{% endblock %}

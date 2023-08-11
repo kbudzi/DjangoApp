@@ -4,7 +4,7 @@
 
 {% block strona %}
 
-<h1>Czy na pewno chcesz dodać "{{ operacja.operacja }}"?</h1>
+<h1>Czy na pewno chcesz dodać "{{ indeksy.indeks }} do oferty {{ oferty.nr_zew }} "?</h1>
 <form method="post">
     {% csrf_token %}   
     <button type="submit">Usuń operację</button>

@@ -99,22 +99,33 @@ def indeksy_oferta(request, id):
     indeksy = Indeksy.objects.filter(kontrahent=kontrahent)
     
     oid=oferty.id
+    kon=kontrahent.id
     print(oid)
     request.session['oid'] = oid
-    
+    request.session['kon'] = kon
     return render(request, 'wybierz_indeks2.html',{'indeksy': indeksy, 'oferty':oferty})
 #def dodaj_do_bazy():
 @login_required
 def add_indeks(request, id):
     indeksy = get_object_or_404(Indeksy, pk=id)
-    oferty = Kontrahent.objects.all()
+    oferty = Oferty.objects.all()
+    
     if request.method == "POST":
-        #print( indeksy.id)
+        indeks_add = Indeksy.objects.get(id=id)
+        print(indeks_add.oferta)
         oid = request.session.get('oid')
-        print( oid)
+        kon = request.session.get('kon')
+        kontrah =Kontrahent.objects.get(id=kon)
+        print(kontrah.id)
+        of=Oferty.objects.get(id=oid)
+        obj1 = Indeksy.objects.create(indeks = indeks_add.indeks,ilosc = 1,oferta=of,kontrahent=kontrah)
+        obj1.save()
+
+
         return HttpResponseRedirect(reverse("edytuj_oferte", args=[oid]))
-        #return redirect (wszystkie_oferty)        
+              
     return render(request, 'add_indeks.html',{'indeksy': indeksy, 'oferty':oferty})
+
 @login_required
 def usun_kontrahenta(request, id):
     kontrahenci = get_object_or_404(Kontrahent, pk=id)

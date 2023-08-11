@@ -4,11 +4,22 @@
 
 {% block strona %}
 
-<h1>Czy na pewno chcesz dodać "{{ indeksy.indeks }} do oferty {{ oferty.nr_zew }} "?</h1>
+<h1>Czy na pewno chcesz dodać "{{ indeksy.indeks }}" do oferty {{ oferty.id}} ?</h1>
+   
 <form method="post">
     {% csrf_token %}   
-    <button type="submit">Usuń operację</button>
+    <button type="submit">Dodaj</button>
     
 </form> 
+{% for techno in technologia %}
+        
+
+        <form method="get" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{technologia.indeks }} <button type="indeks">Dodaj indeks</button>
+        </form>
+        
+
+{% endfor %}
 
 {% endblock %}

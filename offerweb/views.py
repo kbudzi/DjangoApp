@@ -39,21 +39,28 @@ def edytuj_top_oferty(request, id):
 @login_required
 def edytuj_oferte(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
-    kontrahent = Kontrahent.objects.get(pk=oferty.kontrahenci.id)
-    #kontrahent = get_object_or_404(Kontrahent, pk=id)
+    
+    t=oferty.id
+    
+    ofer = Oferty.objects.get(pk=oferty.id)
+    kontrahenci = Kontrahent.objects.get(pk=oferty.kontrahenci.id)
     oferta_form =OfertaForm(request.GET or None, instance=oferty)
-    indeksy = Indeksy.objects.filter(oferta=oferty)
-    #kontrahent = Kontrahent.objects.filter(oferta=kontrahent) # lista indeksów dla danej oferty
+    indeksy = Indeksy.objects.filter(oferta=ofer)
     indeksy_form = IndeksForm(request.POST or None)#instance=oferty
+    request.session['ofertaid'] = t
     if request.method == 'POST':
         if 'indeks' in request.POST:
-            indeks = indeksy_form.save(commit=False)
-            indeks.oferta = oferty
-            indeks.kontrahent = kontrahent
-            indeks.save()
+
+            ind = indeksy_form.save(commit=False)
+            ind.kontrahent = kontrahenci
+            ind.save()
+            b=ind.id
+            ind = Indeksy.objects.get(id=b)
+            ofe = ofer
+            ind.oferta.add(ofe)
+            ind.save()
             return HttpResponseRedirect(reverse("edytuj_oferte", args=[id]))
-    #t=kontrahent.id
-    t=oferty.id
+    #t=kontrahent.id  
     return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form, 'indeksy':indeksy, 'indeksy_form':indeksy_form, 't':t})
 
 @login_required
@@ -96,19 +103,30 @@ def indeksy_kontrahent(request, id):
 def indeksy_oferta(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
     kontrahent = Kontrahent.objects.get(pk=oferty.kontrahenci.id)
-    ind = Indeksy.objects.all()
     indeksy = Indeksy.objects.filter(kontrahent=kontrahent)
-    indeksy_form = IndeksForm (request.POST or None)
+    oid=oferty.id
+    kon=kontrahent.id
+    request.session['oid'] = oid
+    request.session['kon'] = kon
+    return render(request, 'wybierz_indeks2.html',{'indeksy': indeksy, 'oferty':oferty})
 
-    if request.method == "POST":
-        for i in indeksy:
-        #i= Indeksy.objects.get(pk=ind.indeks)
-            print(i.id)
-        #ind.delete()
-    
-    return render(request, 'wybierz_indeks2.html',{'indeksy': indeksy, 'oferty':oferty, 'indeksy_form':indeksy_form})
+
 #def dodaj_do_bazy():
-        
+@login_required
+def add_indeks(request, id):
+    indeksy = get_object_or_404(Indeksy, pk=id)
+    oferty = Oferty.objects.all()
+    
+    if request.method == "POST":
+        indeks_add = Indeksy.objects.get(id=id)
+        oid = request.session.get('oid')
+        #kon = request.session.get('kon')  #pobieram id kontrahenta
+        of=Oferty.objects.get(id=oid)
+        indeks_add.oferta.add(of)    
+        indeks_add.save()
+        return HttpResponseRedirect(reverse("edytuj_oferte", args=[oid]))
+              
+    return render(request, 'add_indeks.html',{'indeksy': indeksy, 'oferty':oferty})
 
 @login_required
 def usun_kontrahenta(request, id):
@@ -121,7 +139,8 @@ def usun_kontrahenta(request, id):
 @login_required
 def usun_indeks(request, id):
     indeks = get_object_or_404(Indeksy, pk=id)
-    oferta_id = indeks.oferta.id
+    ofertaid = request.session.get('ofertaid')
+    oferta_id = ofertaid
     if request.method == "POST":
         indeks.delete()
         #return redirect (wszystkie_oferty)
@@ -131,17 +150,16 @@ def usun_indeks(request, id):
 @login_required
 def edytuj_indeks(request, id):
     indeks = get_object_or_404(Indeksy, pk=id)
-    oferta_id = indeks.oferta.id
+    #oferta_id = indeks.oferta.id
+    ofertaid = request.session.get('ofertaid')
+    oferta_id = ofertaid
     indeksy_form = IndeksForm(request.POST or None, instance=indeks)
-    technologia = Technologia.objects.filter(indeks=indeks)
-    technologia_form = TechnologiaForm(request.POST or None, instance=indeks)
+    #technologia = Technologia.objects.filter(indeks=indeks)
+    #technologia_form = TechnologiaForm(request.POST or None, instance=indeks)
     if indeksy_form.is_valid():
         indeksy_form.save()
         return redirect("edytuj_oferte", id=oferta_id)
-            
-        
-
-    return render(request, 'edytuj_indeks.html',{'indeksy_form':indeksy_form,'technologia_form':technologia_form,'technologia':technologia})
+    return render(request, 'edytuj_indeks.html',{'indeksy_form':indeksy_form})
 
 
 @login_required

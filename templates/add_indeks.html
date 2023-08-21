@@ -1,0 +1,25 @@
+{% extends 'glowny.html' %}
+
+{% block tytul %} Dodaj indeks {% endblock %}
+
+{% block strona %}
+
+<h1>Czy na pewno chcesz dodać "{{ indeksy.indeks }}" do oferty {{ oferty.id}} ?</h1>
+   
+<form method="post">
+    {% csrf_token %}   
+    <button type="submit">Dodaj</button>
+    
+</form> 
+{% for techno in technologia %}
+        
+
+        <form method="get" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{technologia.indeks }} <button type="indeks">Dodaj indeks</button>
+        </form>
+        
+
+{% endfor %}
+
+{% endblock %}

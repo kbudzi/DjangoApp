@@ -44,7 +44,8 @@ class Indeksy(models.Model):
     ilosc = models.IntegerField(null=True, blank=True)
     
     czy_mat = models.PositiveBigIntegerField(default=1, choices=mat)
-    oferta=models.ForeignKey(Oferty,on_delete=models.CASCADE)
+    #oferta=models.ForeignKey(Oferty,on_delete=models.CASCADE)
+    oferta=models.ManyToManyField(Oferty, related_name='oferty')
     kontrahent=models.ForeignKey(Kontrahent, on_delete=models.CASCADE)
 
 class Operacje(models.Model):

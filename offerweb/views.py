@@ -91,15 +91,15 @@ def edytuj_kontrahent(request, id):
         kontrahenci_form.save()
         return redirect(kontrahent)
     return render(request, 'nowy_kontrahent.html',{'kontrahenci_form': kontrahenci_form})
-@login_required
 
-def indeksy_kontrahent(request, id):
+
+'''def indeksy_kontrahent(request, id):
     
     kontrahenci = get_object_or_404(Kontrahent, pk=id)
     indeksy = Indeksy.objects.filter(kontrahent=kontrahenci)
     
-    return render(request, 'wybierz_indeks.html',{'indeksy': indeksy, 'kontrahenci':kontrahenci})
-
+    return render(request, 'wybierz_indeks.html',{'indeksy': indeksy, 'kontrahenci':kontrahenci})'''
+@login_required
 def indeksy_oferta(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
     kontrahent = Kontrahent.objects.get(pk=oferty.kontrahenci.id)
@@ -108,7 +108,7 @@ def indeksy_oferta(request, id):
     kon=kontrahent.id
     request.session['oid'] = oid
     request.session['kon'] = kon
-    return render(request, 'wybierz_indeks2.html',{'indeksy': indeksy, 'oferty':oferty})
+    return render(request, 'wybierz_indeks.html',{'indeksy': indeksy, 'oferty':oferty})
 
 
 #def dodaj_do_bazy():

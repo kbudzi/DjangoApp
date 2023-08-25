@@ -55,10 +55,12 @@ class Operacje(models.Model):
     }
     operacja = models.CharField(max_length=32)
     stawka=  models.CharField(max_length=32)
-    tj = models.PositiveIntegerField(default = 1)
-    tpz = models.PositiveIntegerField(default = 1)
+    #tj = models.PositiveIntegerField(default = 1)
+    #tpz = models.PositiveIntegerField(default = 1)
     typ_operacji = models.PositiveBigIntegerField(default=0, choices=typ)
 
 class Technologia(models.Model):
     operacja=models.ManyToManyField(Operacje, related_name='technologie')
     indeks = models.ForeignKey(Indeksy, on_delete=models.CASCADE)
+    tj = models.PositiveIntegerField(default = 1)
+    tpz = models.PositiveIntegerField(default = 1)

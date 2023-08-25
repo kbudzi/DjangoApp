@@ -154,12 +154,15 @@ def edytuj_indeks(request, id):
     ofertaid = request.session.get('ofertaid')
     oferta_id = ofertaid
     indeksy_form = IndeksForm(request.POST or None, instance=indeks)
+    techno_form = TechnologiaForm(request.POST or None)
+    oper = Technologia.objects.get(id=id)
     #technologia = Technologia.objects.filter(indeks=indeks)
     #technologia_form = TechnologiaForm(request.POST or None, instance=indeks)
-    if indeksy_form.is_valid():
-        indeksy_form.save()
+    if all((indeksy_form.is_valid , techno_form.is_valid())):
+        #indeksy_form.save()
+        techno_form.save()
         return redirect("edytuj_oferte", id=oferta_id)
-    return render(request, 'edytuj_indeks.html',{'indeksy_form':indeksy_form})
+    return render(request, 'edytuj_indeks.html',{'indeksy_form':indeksy_form, 'techno_form':techno_form,'oper':oper})
 
 
 @login_required

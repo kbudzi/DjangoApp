@@ -31,5 +31,5 @@ class OperacjeForm(ModelForm):
 class TechnologiaForm(ModelForm):
     class Meta:
         model = Technologia
-        fields = ['indeks','operacja']
+        fields = ['indeks','operacja','tj', 'tpz']
       

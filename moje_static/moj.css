@@ -2,7 +2,15 @@ h2 {
     color:grey;
 }
 body {
-    padding: 2rem;
-    margin-left: 11rem;
+    padding: 1rem;
+    margin-left: 10rem;
+    background: white url("moje_static/images/background.jpg") no-repeat;
 }
-
+.header {
+    padding: 10px;
+    height: 6rem;
+    text-align: left;
+    background: #b1b8b6;
+    color: white;
+    font-size: 18px;
+  }

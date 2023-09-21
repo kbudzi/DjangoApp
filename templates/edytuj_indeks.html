@@ -9,6 +9,17 @@
     <button type="submit" >Zapisz</button>
     <button></button>
 </form>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ techno_form }}
+    <button type="submit" >Zapisz</button>
+    <button></button>
+</form>
+{% for op in oper %}
+        
+<h5>{{op.indeks }}</h5>
+{% endfor %}
+
 
    
 {% endblock %}

@@ -15,22 +15,9 @@
                     
                 </form>
         </div>
-    </div>
-    <hr style="width:50%;text-align:left;margin-left:2">  
-    <div class="card" style="width: 50rem;" row="3"></div>
-    
-        <div class="card-body">
-        <h5 class="card-title">Dodaj indeks</h5>
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ indeksy_form | bootstrap}}
-                    <button type="submit" class="btn btn-primary">Dodaj nowy indeks</button> <a href="{% url 'indeksy_oferta' t %}" class="btn btn-primary">wybierz z listy</a> 
-                </form>
-        </div>
-    </div>   
+ 
 
     
-     
     {% for indeks in indeksy %}
         
         
@@ -43,7 +30,7 @@
               <span class="badge badge-primary badge-pill" style="color:blue">{{indeks.ilosc}} szt.</span>
             </li> 
         </ul> 
-              <a href="{% url 'edytuj_indeks' indeks.id %}">edytuj</a> <a href="{% url 'usun_indeks' indeks.id %}">Usuń</a>
+        
                 
             
             

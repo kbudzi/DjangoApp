@@ -2,7 +2,17 @@ h2 {
     color:grey;
 }
 body {
-    padding: 2rem;
-    margin-left: 11rem;
+    padding: 1rem;
+    margin-left: 10rem;
+    
+    background: url(../moje_static/images/background.jpg);
 }
-
+.header {
+    padding: 10px;
+    height: 6rem;
+    text-align: left;
+    
+    background: rgb(20, 39, 211);
+    color: white;
+    font-size: 20px;
+  }

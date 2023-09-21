@@ -7,6 +7,9 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.template import loader
 from simple_search import search_filter
+from django.db.models import Q
+from .filters import ListingFilter
+
 
 def glowna(request):
     
@@ -16,7 +19,13 @@ def glowna(request):
 @login_required
 def wszystkie_oferty(request):
     oferty =Oferty.objects.all()
-    return render(request, 'oferty.html',{'oferty': oferty})
+    my_Filter = ListingFilter(request.GET, queryset=oferty)
+    oferty = my_Filter.qs
+    return render(request, 'oferty.html',{'oferty': oferty,"my_Filter": my_Filter})
+
+#def filter(request):
+ #   mydata = Oferty.objects.filter(Q(email='budzichowski@tes.com.pl')).values()
+#    return render(request, 'oferty.html',{'mymembers': mydata})
 
 def nowa_oferta(request):
     oferta_form =OfertaForm(request.POST or None)
@@ -30,18 +39,18 @@ def nowa_oferta(request):
 def edytuj_top_oferty(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
     oferta_form =OfertaForm(request.POST or None, instance=oferty)
-    indeksy = Indeksy.objects.filter(Oferta=oferty)
+    ofer = Oferty.objects.get(pk=oferty.id)
+    indeksy = Indeksy.objects.filter(oferta=ofer)
+    indeksy_form = IndeksForm(request.POST or None)#instance=oferty
     
     if oferta_form.is_valid():
         oferta_form.save()
         return redirect(wszystkie_oferty)
-    return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form, 'indeksy':indeksy})
+    return render(request, 'send_offer.html',{'oferta_form': oferta_form, 'indeksy':indeksy,'indeksy_form':indeksy_form,})
 @login_required
 def edytuj_oferte(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
-    
     t=oferty.id
-    
     ofer = Oferty.objects.get(pk=oferty.id)
     kontrahenci = Kontrahent.objects.get(pk=oferty.kontrahenci.id)
     oferta_form =OfertaForm(request.GET or None, instance=oferty)
@@ -91,15 +100,15 @@ def edytuj_kontrahent(request, id):
         kontrahenci_form.save()
         return redirect(kontrahent)
     return render(request, 'nowy_kontrahent.html',{'kontrahenci_form': kontrahenci_form})
-@login_required
 
-def indeksy_kontrahent(request, id):
+
+'''def indeksy_kontrahent(request, id):
     
     kontrahenci = get_object_or_404(Kontrahent, pk=id)
     indeksy = Indeksy.objects.filter(kontrahent=kontrahenci)
     
-    return render(request, 'wybierz_indeks.html',{'indeksy': indeksy, 'kontrahenci':kontrahenci})
-
+    return render(request, 'wybierz_indeks.html',{'indeksy': indeksy, 'kontrahenci':kontrahenci})'''
+@login_required
 def indeksy_oferta(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
     kontrahent = Kontrahent.objects.get(pk=oferty.kontrahenci.id)
@@ -108,7 +117,7 @@ def indeksy_oferta(request, id):
     kon=kontrahent.id
     request.session['oid'] = oid
     request.session['kon'] = kon
-    return render(request, 'wybierz_indeks2.html',{'indeksy': indeksy, 'oferty':oferty})
+    return render(request, 'wybierz_indeks.html',{'indeksy': indeksy, 'oferty':oferty})
 
 
 #def dodaj_do_bazy():
@@ -154,12 +163,15 @@ def edytuj_indeks(request, id):
     ofertaid = request.session.get('ofertaid')
     oferta_id = ofertaid
     indeksy_form = IndeksForm(request.POST or None, instance=indeks)
+    techno_form = TechnologiaForm(request.POST or None)
+    oper = Technologia.objects.get(id=id)
     #technologia = Technologia.objects.filter(indeks=indeks)
     #technologia_form = TechnologiaForm(request.POST or None, instance=indeks)
-    if indeksy_form.is_valid():
-        indeksy_form.save()
+    if all((indeksy_form.is_valid , techno_form.is_valid())):
+        #indeksy_form.save()
+        techno_form.save()
         return redirect("edytuj_oferte", id=oferta_id)
-    return render(request, 'edytuj_indeks.html',{'indeksy_form':indeksy_form})
+    return render(request, 'edytuj_indeks.html',{'indeksy_form':indeksy_form, 'techno_form':techno_form,'oper':oper})
 
 
 @login_required

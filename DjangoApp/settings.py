@@ -30,7 +30,8 @@ INSTALLED_APPS = [
     "phonenumber_field",
     'address',
     'bootstrapform',
-    'offerweb'
+    'offerweb',
+    
 ]
 
 MIDDLEWARE = [

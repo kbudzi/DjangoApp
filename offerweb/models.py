@@ -3,7 +3,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 from address.models import AddressField
 from django.urls import reverse
 from .fields import OrderField
-
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
 
 class Kontrahent(models.Model):
     Nazwa= models.CharField(max_length=32, unique=True, null = False)
@@ -14,8 +15,7 @@ class Kontrahent(models.Model):
     
     def __str__(self):
         return self.Nazwa + ' (' + self.email+')'
-    
-    
+       
 class Oferty(models.Model):
     stat={
         (0, "nowa"),
@@ -34,7 +34,12 @@ class Oferty(models.Model):
     def numer_oferty(self):
             return "{} ({})".format(self.data, self.nr_zew)
     order = OrderField()
- 
+@receiver ([post_save, pre_save], sender=Oferty)   
+def order_po_zapisaniu (sender, instance, **kwargs):
+     print("własnie stworzyłem numer oferty")    
+     print(instance.nr_zew)
+post_save.connect(order_po_zapisaniu,sender=Oferty) 
+
 class Indeksy(models.Model):
     mat={
         (0, "Tak"),

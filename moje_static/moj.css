@@ -4,13 +4,15 @@ h2 {
 body {
     padding: 1rem;
     margin-left: 10rem;
-    background: white url("moje_static/images/background.jpg") no-repeat;
+    
+    background: url(../moje_static/images/background.jpg);
 }
 .header {
     padding: 10px;
     height: 6rem;
     text-align: left;
-    background: #b1b8b6;
+    
+    background: rgb(20, 39, 211);
     color: white;
-    font-size: 18px;
+    font-size: 20px;
   }

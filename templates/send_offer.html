@@ -1,0 +1,41 @@
+{% extends 'glowny.html' %}
+{% load bootstrap %}
+
+{% block tytul %} Oferty {% endblock %}
+
+{% block strona %}
+<a href="{% url 'oferty' %}">Powrót</a>
+<hr style="width:50%;text-align:left;margin-left:2">  
+    <div class="card" style="width: 50rem;">
+        <div class="card-body">
+        <h5 class="card-title">Nagłówek oferty</h5>
+                
+                    {% csrf_token %}
+                    {{ oferta_form | bootstrap }}
+                    
+                </form>
+        </div>
+ 
+
+    
+    {% for indeks in indeksy %}
+        
+        
+        
+        <hr style="width:50%;text-align:left;margin-left:0">  
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{indeks.indeks }}
+                
+              <span class="badge badge-primary badge-pill" style="color:blue">{{indeks.ilosc}} szt.</span>
+            </li> 
+        </ul> 
+        
+                
+            
+            
+            
+            
+          
+    {% endfor %}    
+{% endblock %}

@@ -6,7 +6,6 @@ from .forms import KontrahentForm, OfertaForm, IndeksForm,OperacjeForm, Technolo
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.template import loader
-from simple_search import search_filter
 from django.db.models import Q
 from .filters import ListingFilter
 

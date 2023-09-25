@@ -1,1 +1,3 @@
 Stworzyć template z informacją czy chcesz dany indeks dodać. Tak jak to jest podczas usuwania. Wtedy łączy z iz indeksu i dodaje do oferty 
+background-color:#6b6262;
+background: #b1b8b6;

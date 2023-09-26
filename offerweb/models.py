@@ -1,9 +1,10 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-#from address.models import AddressField
+
 from django.urls import reverse
 from .fields import OrderField
-
+import datetime
+from django.utils import timezone
 
 class Kontrahent(models.Model):
     Nazwa= models.CharField(max_length=32, unique=True, null = False)
@@ -45,7 +46,7 @@ class Indeksy(models.Model):
     czy_mat = models.PositiveBigIntegerField(default=1, choices=mat)
     #oferta=models.ForeignKey(Oferty,on_delete=models.CASCADE)
     oferta=models.ManyToManyField(Oferty, related_name='oferty')
-    kontrahent=models.ForeignKey(Kontrahent, on_delete=models.CASCADE)
+    kontrahent=models.ForeignKey(Kontrahent, on_delete=models.CASCADE,default=1)
 
 class Operacje(models.Model):
     typ = {

@@ -1,18 +1,53 @@
+
 h2 {
     color:grey;
+}
+h3 {
+    color:wheat;
+    text-align:center;
+    
 }
 body {
     padding: 1rem;
     margin-left: 10rem;
     
-    background: url(../moje_static/images/background.jpg);
+    background: rgb(128, 179, 75);
+    background: url(../static/images/verlay.svg);
+
+    background-size: 100vw 100vh;
+
 }
 .header {
     padding: 10px;
     height: 6rem;
     text-align: left;
     
-    background: rgb(20, 39, 211);
     color: white;
     font-size: 20px;
+    border-bottom: 1cap;
   }
+ 
+.list-group-item{
+    background: transparent;
+    
+}
+table tr td, table tr th{
+    background-color: rgba(128, 179, 75, 0.1) !important;
+    color: rgba(238, 236, 215, 0.897)!important;
+    text-shadow: 3px;
+}
+.td{
+    color: wheat;
+}
+.fa-user-xmark{
+ color:rgba(228, 50, 50, 0.836);
+}
+.fa-user-plus{
+    color:rgba(140, 201, 143, 0.822);
+}
+.fa-user-pen{
+    color:rgba(36, 35, 33, 0.801);
+}
+.fa-trash-can{
+    color:rgba(228, 50, 50, 0.836);
+}

@@ -4,14 +4,38 @@
 
 {% block strona %}
 
-    <h1>Lista kontrahentów</h1>
-    <a href="{% url 'nowy_kontrahent' %}">Dodaj</a>
-    {% for kontrahent in kontrahenci %}
-        <h2>{{kontrahent.Nazwa}}</h2>
-        <p>{{kontrahent.email}}</p>
-        <p>{{kontrahent.tel}}</p>
-        <a href="{% url 'edytuj_kontrahenta' kontrahent.id %}">Edytuj</a>
-        <a href="{% url 'usun_kontrahenta' kontrahent.id %}">Usuń</a>
-    {% endfor %}
+    <h3>Lista kontrahentów:</h3>
+    <a href="{% url 'nowy_kontrahent' %}"><i class="fa-solid fa-user-plus fa-3x"></i></a>
+    <hr class="solid">
+    
+    
 
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">nazwa kontrahenta</th>
+            <th scope="col">email</th>
+            <th scope="col">nr. kontaktowy</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        
+    
+        <tbody>
+    {% for kontrahent in kontrahenci %}
+    <tr>
+        <th scope="row"></th>
+        <td>{{kontrahent.Nazwa}}</td>
+        <td>{{kontrahent.email}}</td>
+        <td>{{kontrahent.tel}} </td> 
+        <td><a href="{% url 'edytuj_kontrahenta' kontrahent.id %}"><i class="fa-solid fa-user-pen fa-xl"></i></a>
+        <a href="{% url 'usun_kontrahenta' kontrahent.id %}"><i class="fa-solid fa-user-xmark fa-xl"></i></a></li></td>
+    {% endfor %}
+    </tr>
+    </tbody>
+
+
+  
 {% endblock %}

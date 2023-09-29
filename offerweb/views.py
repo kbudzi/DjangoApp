@@ -10,6 +10,7 @@ from django.db.models import Q
 from .filters import ListingFilter
 
 
+
 def glowna(request):
     
     return render(request, 'home.html')

@@ -19,7 +19,7 @@
     </p>
 
     <tr>
-      <th>#</th>
+      
       <th>Numer oferty</th>
       <th>Nazwa firmy</th>
       <th>Data dodania</th>
@@ -32,8 +32,8 @@
     {% for oferta in oferty %}
    <tbody> 
     <tr>
-      <th scope="row">{{oferta.id}}</th>
-      <td>{{oferta.order}}</td>
+      
+      <td>{{oferta.order_number}}</td>
       <td>{{oferta.kontrahenci}}</td>
       <td>{{oferta.data}}</td>
       <td>{{oferta.get_status_display}}</td>
@@ -53,7 +53,9 @@
 
 
 
-
+  <button data-href="/admin" onclick="window.open(this.dataset.href, 'my-new-popup', 'width=400,height=600,toolbar=no,scrollbars=yes,resizable=yes'); return false;">
+    open popup
+</button> 
     
 {% endblock %}
 

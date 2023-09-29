@@ -51,3 +51,7 @@ table tr td, table tr th{
 .fa-trash-can{
     color:rgba(228, 50, 50, 0.836);
 }
+.card{
+    background-color: rgba(128, 179, 75, 0.1);
+    color:wheat;
+}

@@ -34,6 +34,7 @@ class Oferty(models.Model):
     def numer_oferty(self):
             return "{} ({})".format(self.data, self.nr_zew)
     order = OrderField()
+    order_number = models.TextField(null=True,)
 
 class Indeksy(models.Model):
     mat={

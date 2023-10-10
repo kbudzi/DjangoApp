@@ -184,7 +184,7 @@ def edytuj_indeks(request, id):
     techno_form = TechnologiaForm(request.POST or None)
     
     #oper = Technologia.objects.get(id=id)
-    technologia = Technologia.objects.filter(indeks=indeks)
+    mytechno = Technologia.objects.filter(indeks=indeks)
     
     #technologia_form = TechnologiaForm(request.POST or None, instance=indeks)
     if all((indeksy_form.is_valid , techno_form.is_valid())):

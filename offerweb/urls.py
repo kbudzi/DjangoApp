@@ -1,6 +1,6 @@
 
 from django.urls import path
-from offerweb.views import wszystkie_oferty,nowa_oferta,add_indeks, glowna, dodaj_operacje,add_new_indeks,usun_operacje,indeksy_oferta ,edytuj_top_oferty,edytuj_oferte, operacje, kontrahent, nowy_kontrahent, edytuj_kontrahent, usun_kontrahenta, usun_oferte ,usun_indeks, edytuj_indeks
+from offerweb.views import wszystkie_oferty,nowa_oferta,add_indeks, gatunek,nowy_gatunek, glowna, kalkulator, dodaj_operacje,add_new_indeks,usun_operacje,indeksy_oferta ,edytuj_top_oferty,edytuj_oferte, operacje, kontrahent, nowy_kontrahent, edytuj_kontrahent, usun_kontrahenta, usun_oferte ,usun_indeks, edytuj_indeks
 
 urlpatterns = [
     path('oferty/', wszystkie_oferty, name="oferty"),
@@ -25,7 +25,9 @@ urlpatterns = [
     path('dodaj_operacje/', dodaj_operacje, name ="dodaj_operacje"),
     path('usun_operacje/<int:id>/', usun_operacje, name="usun_operacje"),
     
-    
+    path('kalkulator/', kalkulator, name= "kalkulator"),
+    path('gatunek', gatunek, name= "gatunek"),
+    path('nowy_gatunek', nowy_gatunek, name= "nowy_gatunek"),
 
     path('', glowna),
 ]

@@ -69,3 +69,18 @@ class Technologia(models.Model):
 class Mytechno(Technologia):
     class Meta:
         proxy = True
+class Gatunek(models.Model):
+    nazwa = models.CharField(null=False, blank=True,max_length=30)
+    gestosc = models.DecimalField(max_digits=6, decimal_places=2, null=False)
+
+class Kalkulator(models.Model):
+    typ = {
+        ('NO', "NO"),
+        ('YES', "YES")
+    }
+    profil = models.PositiveBigIntegerField(default=0, choices=typ)
+    gatunek = models.ForeignKey(Gatunek, on_delete=models.CASCADE,default=1,null=False)
+    srednica=models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    szerokosc=models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    grubosc=models.DecimalField(max_digits=6, decimal_places=2, null=False)
+    dlugosc=models.DecimalField(max_digits=6, decimal_places=2, null=False)

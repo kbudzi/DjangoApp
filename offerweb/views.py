@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from .models import Kontrahent , Oferty, Indeksy, Operacje, Technologia
-from .forms import KontrahentForm, OfertaForm, IndeksForm,OperacjeForm, TechnologiaForm
+from .models import Kontrahent , Oferty, Indeksy, Operacje, Technologia, Gatunek, Kalkulator
+from .forms import KontrahentForm, OfertaForm, IndeksForm,OperacjeForm, TechnologiaForm, GatunekForm, WalekForm,BlachaForm, YourForm
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.template import loader
@@ -10,6 +10,7 @@ from django.db.models import Q
 from .filters import ListingFilter
 from django.urls import reverse_lazy
 from bootstrap_modal_forms.generic import BSModalCreateView
+from django.template import loader
 
 def glowna(request):
     
@@ -218,3 +219,46 @@ def usun_operacje(request,id):
         return redirect ('operacje')
 
     return render(request, 'usun_operacje.html',{'operacja': operacja})
+
+
+
+
+def gatunek(request):
+    gatunki = Gatunek.objects.all()
+    return render(request, 'gatunek',{'gatunki': gatunki})
+def nowy_gatunek(request):
+    gatunek_form =GatunekForm(request.POST or None)
+    if gatunek_form.is_valid():
+        gatunek_form.save()
+        return redirect('kalkulator')
+        
+    return render(request, 'nowy_gatunek.html',{'gatunek_form': gatunek_form})
+    
+def kalkulator(request):
+    blacha_form= BlachaForm(request.POST or None)
+    walek_form= WalekForm(request.POST or None)
+    
+    a = 0
+    if request.method == 'POST':
+        form = YourForm(request.POST)
+        #if form.is_valid():
+        if request.method == 'POST':
+            # Tutaj możesz obsłużyć odpowiedź po wybraniu przycisku radio
+            #selected_option = form.cleaned_data.get('like')
+            my_variable = request.POST.get('my_variable_name')
+            
+            #if selected_option == 'YES':
+            if my_variable == 'Blacha':
+                print('0')
+                a='b'
+                
+                #form = BlachaForm(initial={'like':'YES'})
+            else:
+                print("1")
+                a='w'
+                #form = WalekForm(initial={'like':'NO'})
+            
+    else:
+        form = YourForm()
+
+    return render(request, 'kalkulator.html', {'form': form, 'blacha_form':blacha_form,'a':a, 'walek_form':walek_form})

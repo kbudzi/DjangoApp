@@ -1,0 +1,14 @@
+{% extends 'glowny.html' %}
+
+{% block tytul %} Nowy gatunek {% endblock %}
+
+{% block strona %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ gatunek_form }}
+        
+        <button type="submit">Dodaj gatunek</button>
+       
+       </button>
+    </form>
+{% endblock %}

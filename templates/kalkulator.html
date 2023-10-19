@@ -1,0 +1,110 @@
+{% extends 'glowny.html' %}
+
+{% block tytul %} Kalkulator wagi {% endblock %}
+
+{% block strona %}
+
+<style>
+
+[type=radio] { 
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+[type=radio] + img {
+  cursor: pointer;
+  height: 100px;
+  width: 100px;
+  float:left
+  
+}
+/* CHECKED STYLES */
+[type=radio]:checked + img {
+  outline: 2px solid #f00;
+}
+
+#profiles{
+    width: auto;
+    height: 500px;
+    background-color: rgba(250, 235, 215, 0.253);
+    color: black;
+    text-align: center;
+}
+#blacha{
+    float: left;
+    
+}
+#walek{
+    float: left;
+    
+}
+#rura{
+    float: left;
+    
+}
+</style>
+    
+    <h2><a href="{% url 'oferty' %}">Przejdź do ofert</a></h2>
+    
+<!--
+
+<form action="/my-view-url/" method="POST">
+        {% csrf_token %}
+        {% for choice in form.like %}
+    {{ choice.tag }}- {{ choice.choice_label }}
+
+{% endfor %}
+    <button type="submit">Wyślij</button>
+</form>
+-->
+<form method="POST">
+    {% csrf_token %}
+    <div id="profiles">
+        
+            <legend>Wybierz profil:</legend>
+          
+            <div id="blacha">
+              <label>Blacha 
+              <input type="radio" id="blacha" name="my_variable_name" value="Blacha">
+              {% load static %}<img src="{% static 'images/rura.jpg' %}" />
+              </label>
+            </div>
+          
+            <div id="walek">
+              <label>Walek
+              <input type="radio" id="walek" name="my_variable_name" value="Walek" />
+              {% load static %}<img src="{% static 'images/thumbs.png' %}" />
+            
+              </label>
+            </div>
+          
+            <div id="rura">
+              <label>Rura  
+              <input type="radio" id="rura" name="my_variable_name" value="Rura" />
+              {% load static %}<img src="{% static 'images/thumbs.png' %}" />
+              </label>
+            </div>
+            <button type="submit">Oblicz</button>
+
+        
+    </div>
+
+
+        
+        {% if a == 'b' %}
+            Label blacha
+        {% elif a == 'w' %}
+            Label wałek
+            <input type="number" ...>
+            <button type="submit">przelicz</button>
+       
+            </button>
+        {% else %}
+            Wybierz profil
+        {% endif %}
+    
+     
+
+    </form>
+{% endblock %}

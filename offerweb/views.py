@@ -239,6 +239,7 @@ def kalkulator(request):
     walek_form= WalekForm(request.POST or None)
     
     a = 0
+    result=0
     if request.method == 'POST':
         form = YourForm(request.POST)
         #if form.is_valid():
@@ -249,16 +250,26 @@ def kalkulator(request):
             
             #if selected_option == 'YES':
             if my_variable == 'Blacha':
-                print('0')
-                a='b'
+                sz = request.POST.get('sz')
+                gr = request.POST.get('gr')
+                dl = request.POST.get('dl')
+                
+                result=float(sz)*float(gr)*float(dl)
+                print(result)
+                
+                
                 
                 #form = BlachaForm(initial={'like':'YES'})
-            else:
-                print("1")
+            elif my_variable == 'Walek':
+                print("wybrałem wałek")
                 a='w'
+                print('a')
                 #form = WalekForm(initial={'like':'NO'})
-            
+            elif my_variable == 'Rura':
+                print("wybrałem rurę")
+                a='r'
+                print(a)
     else:
         form = YourForm()
 
-    return render(request, 'kalkulator.html', {'form': form, 'blacha_form':blacha_form,'a':a, 'walek_form':walek_form})
+    return render(request, 'kalkulator.html', {'form': form, 'blacha_form':blacha_form,'a':a, 'walek_form':walek_form,'result':result})

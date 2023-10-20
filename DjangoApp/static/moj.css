@@ -72,8 +72,3 @@ table tr td, table tr th{
 label{
     color:rgb(255, 255, 255);
 }
-#profiles{
-    height: 600px;
-    width: 600px;
-    background-color: aquamarine;
-}

@@ -47,7 +47,7 @@ class Indeksy(models.Model):
     czy_mat = models.PositiveBigIntegerField(default=1, choices=mat)
     #oferta=models.ForeignKey(Oferty,on_delete=models.CASCADE)
     oferta=models.ManyToManyField(Oferty, related_name='oferty')
-    kontrahent=models.ForeignKey(Kontrahent, on_delete=models.CASCADE,default=1)
+    kontrahent=models.ForeignKey(Kontrahent, on_delete=models.SET_NULL,default=1,null=True)
 
 class Operacje(models.Model):
     typ = {
@@ -61,7 +61,26 @@ class Operacje(models.Model):
     typ_operacji = models.PositiveBigIntegerField(default=0, choices=typ)
 
 class Technologia(models.Model):
-    operacja=models.ManyToManyField(Operacje, related_name='technologie')
+    operacja=models.ForeignKey(Operacje, on_delete=models.CASCADE, parent_link=True)
     indeks = models.ForeignKey(Indeksy, on_delete=models.CASCADE)
     tj = models.PositiveIntegerField(default = 1)
     tpz = models.PositiveIntegerField(default = 1)
+
+class Mytechno(Technologia):
+    class Meta:
+        proxy = True
+class Gatunek(models.Model):
+    nazwa = models.CharField(null=False, blank=True,max_length=30)
+    gestosc = models.DecimalField(max_digits=6, decimal_places=2, null=False)
+
+class Kalkulator(models.Model):
+    typ = {
+        ('NO', "NO"),
+        ('YES', "YES")
+    }
+    profil = models.PositiveBigIntegerField(default=0, choices=typ)
+    gatunek = models.ForeignKey(Gatunek, on_delete=models.CASCADE,default=1,null=False)
+    srednica=models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    szerokosc=models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    grubosc=models.DecimalField(max_digits=6, decimal_places=2, null=False)
+    dlugosc=models.DecimalField(max_digits=6, decimal_places=2, null=False)

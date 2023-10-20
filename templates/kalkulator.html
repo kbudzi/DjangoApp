@@ -1,0 +1,220 @@
+{% extends 'glowny.html' %}
+
+{% block tytul %} Kalkulator wagi {% endblock %}
+
+{% block strona %}
+
+<style>
+
+[type=radio] { 
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+[type=radio] + img {
+  cursor: pointer;
+  height: 100px;
+  width: 100px;
+  float:left
+  
+}
+/* CHECKED STYLES */
+[type=radio]:checked + img {
+  outline: 2px solid #f00;
+}
+[type=radio] + img:hover
+ {
+  background-color: aqua;
+}
+
+
+
+#container
+{
+    background-color: rgba(0, 255, 255, 0.164);
+    margin: 0;
+    width: auto;
+
+}
+#profiles{
+    width: auto;
+    height: 150px;
+    background-color: rgba(250, 235, 215, 0.253);
+    color: black;
+    text-align: center;
+    margin: 0 auto;
+    
+}
+.profil
+{
+    display: inline-block;
+    margin-top: auto;
+    margin: 0 auto;}
+#labels
+{
+    
+    width: auto;
+    height: 200px;
+    background-color: rgba(250, 235, 215, 0.253);
+    color: black;
+    text-align: center;  
+    margin-top: 20px;
+    
+    
+}
+
+
+.left {
+    float:left;
+}
+
+.left2 {
+    overflow: hidden;
+    float:left;
+    padding: 0 4px 0 10px;
+    
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+
+}
+.left2:hover {
+    box-shadow: 1px 1px #9ca5da;
+    
+    
+}
+
+
+.left2 input {
+    width: 100%
+}
+</style>    
+
+    
+<!--
+
+<form action="/my-view-url/" method="POST">
+        {% csrf_token %}
+        {% for choice in form.like %}
+    {{ choice.tag }}- {{ choice.choice_label }}
+
+{% endfor %}
+    <button type="submit">Wyślij</button>
+</form>
+-->
+<form method="POST">
+    {% csrf_token %}
+<div id="container">
+    <div id="profiles">
+        <h3>Wybierz profil</h3>
+        <div class="profil">
+            <label> 
+            <input type="radio" id="blacha" name="my_variable_name" value="Blacha"onclick="showForm('formB')">
+            {% load static %}<img src="{% static 'images/b.png' %}" />
+            </label>
+        </div>
+        
+        <div class="profil">
+            <label>
+            <input type="radio" id="walek" name="my_variable_name" value="Walek" onclick="showForm('formW')"/>
+            {% load static %}<img src="{% static 'images/w.png' %}" />
+            </label>
+        </div>
+        
+        <div class="profil">
+            <label> 
+            <input type="radio" id="rura" name="my_variable_name" value="Rura" onclick="showForm('formR')"/>
+            {% load static %}<img src="{% static 'images/r.png' %}" />
+            </label>
+        </div>
+   
+    </div>
+
+
+<!--      {% if a == 'b' %}
+            Label blacha
+        {% elif a == 'w' %}
+            Label wałek
+            <input type="number" ...>
+            #<button type="submit">przelicz</button>
+       
+            </button>
+        {% else %}
+            Wybierz profil
+        {% endif %}
+    
+-->       
+
+
+<div id="labels">
+<form action="">
+    <div class="form">
+        <div id="formB" style="display: none;">
+        <h3>Wprowadź wymiary</h3>
+        <label class="left" for="gr">Grubość:</label>
+        <input class="left2" type="number" id="gr" name="gr"style="float:left;">
+        <label class="left" for="sz">Szerokość:</label>
+        <input class="left2" type="number" id="sz" name="sz">
+        <label class="left" for="dl">Długość:</label>
+        <input class="left2" type="number" id="dl" name="dl">
+        <button type="submit" style="clear:both;">Oblicz</button>
+        </div>
+    </div>
+    <div class="form">
+        <div class="form" id="formW" style="display: none;">
+        <h3>Wprowadź wymiary</h3>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email"><br>
+        <label for="phone">Telefon:</label><br>
+        <input type="tel" id="phone" name="phone"><br>
+        <button type="submit">Oblicz</button>
+    </div>
+        
+  </div>
+    <div class="form">
+        <div class="form" id="formR" style="display: none;">
+        <h3>Wprowadź wymiary</h3>
+        <label for="gr">Wprowadź grubość:</label><br>
+        <input type="number" id="gr" name="grubosc"><br>
+        <label for="sz">Wprowadź szerokość:</label><br>
+        <input type="text" id="sz" name="szerokosc"><br>
+        <label for="sz">Wprowadź długość:</label><br>
+        <input type="text" id="dl" name="dlugosc"><br>
+        <button type="submit">Oblicz</button>
+    </div>
+        
+  </div>
+</form>
+</div>
+{% if result == 0 %}
+    ----
+{% else %}
+    {{result}}
+{% endif %}
+            
+
+<!-- Skrypty -->
+<script>
+function showForm(formId) {
+  var form1 = document.getElementById("formB");
+  var form2 = document.getElementById("formW");
+  var form3 = document.getElementById("formR");
+
+  if (formId === 'formB') {
+    form1.style.display = "block";
+    form2.style.display = "none";
+    form3.style.display = "none";
+  } else if (formId === 'formW') {
+    form1.style.display = "none";
+    form2.style.display = "block";
+    form3.style.display = "none";
+  } else if(formId === 'formR') {
+    form1.style.display = "none";
+    form2.style.display = "none";
+    form3.style.display = "block";
+}}
+</script>
+
+
+{% endblock %}

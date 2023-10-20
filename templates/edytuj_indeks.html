@@ -15,9 +15,9 @@
     <button type="submit" >Zapisz</button>
     <button></button>
 </form>
-{% for op in oper %}
+{% for tech in technologia %}
         
-<h5>{{op.indeks }}</h5>
+<h5>{{tech.operacja.operacja }} {{tech.tj }} {{tech.tpz }}</h5>
 {% endfor %}
 
 

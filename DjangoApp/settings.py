@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "phonenumber_field",
-    
+    'bootstrap_modal_forms',
     'bootstrapform',
     'offerweb',
     
@@ -121,7 +121,7 @@ STATIC_ROOT=os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = ["DjangoApp/static"]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

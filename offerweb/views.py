@@ -1,15 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from .models import Kontrahent , Oferty, Indeksy, Operacje, Technologia
-from .forms import KontrahentForm, OfertaForm, IndeksForm,OperacjeForm, TechnologiaForm
+from .models import Kontrahent , Oferty, Indeksy, Operacje, Technologia, Gatunek, Kalkulator
+from .forms import KontrahentForm, OfertaForm, IndeksForm,OperacjeForm, TechnologiaForm, GatunekForm, WalekForm,BlachaForm, YourForm
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.template import loader
 from django.db.models import Q
 from .filters import ListingFilter
-
-
+from django.urls import reverse_lazy
+from bootstrap_modal_forms.generic import BSModalCreateView
+from django.template import loader
 
 def glowna(request):
     
@@ -72,6 +73,7 @@ def edytuj_oferte(request, id):
     #t=kontrahent.id  
     return render(request, 'edytuj_oferte.html',{'oferta_form': oferta_form, 'indeksy':indeksy, 'indeksy_form':indeksy_form, 't':t})
 
+
 @login_required
 def usun_oferte(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
@@ -101,13 +103,6 @@ def edytuj_kontrahent(request, id):
         return redirect(kontrahent)
     return render(request, 'nowy_kontrahent.html',{'kontrahenci_form': kontrahenci_form})
 
-
-'''def indeksy_kontrahent(request, id):
-    
-    kontrahenci = get_object_or_404(Kontrahent, pk=id)
-    indeksy = Indeksy.objects.filter(kontrahent=kontrahenci)
-    
-    return render(request, 'wybierz_indeks.html',{'indeksy': indeksy, 'kontrahenci':kontrahenci})'''
 @login_required
 def indeksy_oferta(request, id):
     oferty = get_object_or_404(Oferty, pk=id)
@@ -118,6 +113,30 @@ def indeksy_oferta(request, id):
     request.session['oid'] = oid
     request.session['kon'] = kon
     return render(request, 'wybierz_indeks.html',{'indeksy': indeksy, 'oferty':oferty})
+
+def add_new_indeks (request, **kwargs):
+
+    oid = request.session.get('oid')
+    oferty = get_object_or_404(Oferty, pk=self.id)
+    indeksy_form = IndeksForm(request.POST or None)#instance=oferty
+    kontrahenci = Kontrahent.objects.get(pk=oferty.kontrahenci.id)
+    
+    if request.method == 'POST':
+        if 'indeks' in request.POST:
+            
+            of=Oferty.objects.get(id=oid)
+            ind = indeksy_form.save(commit=False)
+            ind.kontrahent = kontrahenci
+            ind.oferta.add(of)
+            ind.save()
+            
+            return HttpResponseRedirect(reverse("edytuj_oferte", args=[64])) 
+    return render(request, 'add_new_indeks.html',{'indeksy_form':indeksy_form})
+class BookCreateView(BSModalCreateView):
+    template_name = 'add_new_indeks.html'
+    form_class = IndeksForm
+    success_message = 'Success: Book was created.'
+    success_url = reverse_lazy('index')
 
 
 #def dodaj_do_bazy():
@@ -164,14 +183,19 @@ def edytuj_indeks(request, id):
     oferta_id = ofertaid
     indeksy_form = IndeksForm(request.POST or None, instance=indeks)
     techno_form = TechnologiaForm(request.POST or None)
-    oper = Technologia.objects.get(id=id)
-    #technologia = Technologia.objects.filter(indeks=indeks)
+    
+    #oper = Technologia.objects.get(id=id)
+    mytechno = Technologia.objects.filter(indeks=indeks)
+    
     #technologia_form = TechnologiaForm(request.POST or None, instance=indeks)
     if all((indeksy_form.is_valid , techno_form.is_valid())):
         #indeksy_form.save()
-        techno_form.save()
+        tech = techno_form.save(commit=False)
+        tech.indeks = indeks
+        
+        tech.save()
         return redirect("edytuj_oferte", id=oferta_id)
-    return render(request, 'edytuj_indeks.html',{'indeksy_form':indeksy_form, 'techno_form':techno_form,'oper':oper})
+    return render(request, 'edytuj_indeks.html',{'indeksy_form':indeksy_form, 'techno_form':techno_form, 'technologia':technologia})
 
 
 @login_required
@@ -195,3 +219,57 @@ def usun_operacje(request,id):
         return redirect ('operacje')
 
     return render(request, 'usun_operacje.html',{'operacja': operacja})
+
+
+
+
+def gatunek(request):
+    gatunki = Gatunek.objects.all()
+    return render(request, 'gatunek',{'gatunki': gatunki})
+def nowy_gatunek(request):
+    gatunek_form =GatunekForm(request.POST or None)
+    if gatunek_form.is_valid():
+        gatunek_form.save()
+        return redirect('kalkulator')
+        
+    return render(request, 'nowy_gatunek.html',{'gatunek_form': gatunek_form})
+    
+def kalkulator(request):
+    blacha_form= BlachaForm(request.POST or None)
+    walek_form= WalekForm(request.POST or None)
+    
+    a = 0
+    result=0
+    if request.method == 'POST':
+        form = YourForm(request.POST)
+        #if form.is_valid():
+        if request.method == 'POST':
+            # Tutaj możesz obsłużyć odpowiedź po wybraniu przycisku radio
+            #selected_option = form.cleaned_data.get('like')
+            my_variable = request.POST.get('my_variable_name')
+            
+            #if selected_option == 'YES':
+            if my_variable == 'Blacha':
+                sz = request.POST.get('sz')
+                gr = request.POST.get('gr')
+                dl = request.POST.get('dl')
+                
+                result=float(sz)*float(gr)*float(dl)
+                print(result)
+                
+                
+                
+                #form = BlachaForm(initial={'like':'YES'})
+            elif my_variable == 'Walek':
+                print("wybrałem wałek")
+                a='w'
+                print('a')
+                #form = WalekForm(initial={'like':'NO'})
+            elif my_variable == 'Rura':
+                print("wybrałem rurę")
+                a='r'
+                print(a)
+    else:
+        form = YourForm()
+
+    return render(request, 'kalkulator.html', {'form': form, 'blacha_form':blacha_form,'a':a, 'walek_form':walek_form,'result':result})

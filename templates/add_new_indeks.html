@@ -1,0 +1,16 @@
+{% extends 'glowny.html' %}
+
+{% block tytul %} Dodaj nowy indeks {% endblock %}
+
+{% block strona %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ indeksy_form }}
+    
+    <button type="submit">Dodaj indeks</button>
+    <button onclick="self.close()">Close</button>
+
+   
+   </button>
+</form>
+{% endblock %}

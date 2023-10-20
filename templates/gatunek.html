@@ -1,0 +1,52 @@
+{% extends 'glowny.html' %}
+
+{% block tytul %} lista gatunków {% endblock %}
+
+{% block strona %}
+
+    
+    <h2><a href="{% url 'kalkulator' %}">Przejdź do kalkulatora</a></h2>
+    
+
+    <table class="table">
+        <thead>
+          <h2>Gatunki materiałów:</h2>
+      
+          
+          <a href="{% url 'nowy_gatunek' %}"><i class="fa-sharp fa-2x fa-solid fa-circle-plus"></i></a>
+          
+          </p>
+      
+          <tr>
+            
+            <th>Numer gatunku</th>
+            <th>Gęstość</th>
+            <th>Opcje</th>
+            
+          </tr>
+        </thead>
+        
+          
+          {% for gatunek in gatunki %}
+         <tbody> 
+          <tr>
+            
+            <td>{{gatunek.nazwa}}</td>
+            <td>{{gatunek.gestosc}}</td>
+            
+            <td> <a href=""><i class="fa-solid fa-magnifying-glass"></i></a>
+              <a href=""><i class="fa-solid fa-pen-to-square"></i></a>
+              <a href=""><i class="fa-solid  fa-trash-can"></i></a>
+             </td> 
+          </tr>
+          
+              
+              
+          {% endfor %}
+          
+        </tbody>
+      </table>
+
+    
+
+{% endblock %}

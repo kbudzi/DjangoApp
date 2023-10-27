@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .models import Kontrahent , Oferty, Indeksy, Operacje, Technologia, Gatunek, Kalkulator
-from .forms import KontrahentForm, OfertaForm, IndeksForm,OperacjeForm, TechnologiaForm, GatunekForm, WalekForm,BlachaForm, YourForm
+from .forms import KontrahentForm, OfertaForm, IndeksForm,OperacjeForm, TechnologiaForm, GatunekForm, WalekForm,BlachaForm, Fgatunek
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.template import loader
@@ -225,7 +225,7 @@ def usun_operacje(request,id):
 
 def gatunek(request):
     gatunki = Gatunek.objects.all()
-    return render(request, 'gatunek',{'gatunki': gatunki})
+    return render(request, 'gatunek.html',{'gatunki': gatunki})
 def nowy_gatunek(request):
     gatunek_form =GatunekForm(request.POST or None)
     if gatunek_form.is_valid():
@@ -237,12 +237,14 @@ def nowy_gatunek(request):
 def kalkulator(request):
     blacha_form= BlachaForm(request.POST or None)
     walek_form= WalekForm(request.POST or None)
-    
+    #select = Fgatunek(request.POST or None) #lista rozwijalna stworzona w forms
+    #form =Fgatunek()
+    form = Fgatunek()
     a = 0
     result=0
+    
     if request.method == 'POST':
-        form = YourForm(request.POST)
-        #if form.is_valid():
+        
         if request.method == 'POST':
             # Tutaj możesz obsłużyć odpowiedź po wybraniu przycisku radio
             #selected_option = form.cleaned_data.get('like')
@@ -253,13 +255,14 @@ def kalkulator(request):
                 sz = request.POST.get('sz')
                 gr = request.POST.get('gr')
                 dl = request.POST.get('dl')
-                
+                blach=Kalkulator(dlugosc=dl,grubosc=gr,szerokosc=sz,profil=my_variable)
+                blach.save()
                 result=float(sz)*float(gr)*float(dl)
                 print(result)
                 
-                
-                
-                #form = BlachaForm(initial={'like':'YES'})
+                g=request.POST.get('lista')
+       
+                print(g)
             elif my_variable == 'Walek':
                 print("wybrałem wałek")
                 a='w'
@@ -270,6 +273,6 @@ def kalkulator(request):
                 a='r'
                 print(a)
     else:
-        form = YourForm()
+        print('chu')
 
     return render(request, 'kalkulator.html', {'form': form, 'blacha_form':blacha_form,'a':a, 'walek_form':walek_form,'result':result})

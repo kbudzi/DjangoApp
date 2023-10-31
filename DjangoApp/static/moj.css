@@ -15,7 +15,8 @@ body {
     background: url(../static/images/verlay.svg);
 
     background-size: 100vw 100vh;
-    font-family: Arial;
+    
+    font-family: 'Cairo', sans-serif;
     color:wheat;
 
 }

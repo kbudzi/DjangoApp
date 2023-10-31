@@ -14,21 +14,19 @@
 }
 [type=radio] + img {
   cursor: pointer;
-  height: 100px;
-  width: 100px;
+  height: 50px;
+  width: 50px;
   float:left
   
 }
 /* CHECKED STYLES */
 [type=radio]:checked + img {
-  outline: 2px solid #f00;
+  outline: 2px solid rgb(82, 79, 79);
 }
 [type=radio] + img:hover
  {
-  background-color: aqua;
+  background-color: rgb(173, 189, 189);
 }
-
-
 
 #container
 {
@@ -37,50 +35,103 @@
     width: auto;
 
 }
+#top{
+    width: 800px;
+    margin: 0 auto;
+    
+}
 #profiles{
-    width: auto;
-    height: 150px;
+    width: 500px;
+    height: 100px;
     background-color: rgba(250, 235, 215, 0.253);
     color: black;
     text-align: center;
-    margin: 0 auto;
+    float:left
+    
+}
+#gatunek{
+    width: 150px;
+    height: 100px;
+    background-color: rgba(209, 145, 61, 0.253);
+    color: black;
+    text-align: center;
+    float:left
+    
+}
+#cena{
+    
+    width: 150px;
+    
+    
+    color: black;
+    text-align: center;
+    float:left
+    
+}
+#price{
+    overflow: hidden;
+    
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 2px
+    
+
+}
+
+#price:hover {
+    box-shadow: 1px 1px #7286f7;
+    
+    
+    
+}
+
+
+#price input {
+    width: 100%
     
 }
 .profil
 {
+    
     display: inline-block;
     margin-top: auto;
     margin: 0 auto;}
 #labels
 {
     
-    width: auto;
-    height: 200px;
+    width: 700px;
+    height: 150px;
     background-color: rgba(250, 235, 215, 0.253);
     color: black;
     text-align: center;  
-    margin-top: 20px;
+    margin: 1px auto;
+    clear: both;
     
     
 }
 
 
-.left {
-    float:left;
+
+.entry
+{
+    display: inline-block;
+    padding: 10px 20px;
 }
 
 .left2 {
     overflow: hidden;
     float:left;
-    padding: 0 4px 0 10px;
+    padding: 0 4px 0 10px;   
     
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 2px
+    
 
 }
 .left2:hover {
-    box-shadow: 1px 1px #9ca5da;
+    box-shadow: 1px 1px #7286f7;
+    
     
     
 }
@@ -88,103 +139,145 @@
 
 .left2 input {
     width: 100%
+    
 }
+.quantity {
+  position: relative;
+}
+
+
+
+.quantity input {
+  width: 120px;
+  height: 26px;
+  line-height: 1.65;
+  padding: 0;
+  margin: 0;
+  padding-left: 20px;
+  border: 1px solid #fafbff;
+}
+
+.quantity input:focus {
+  outline:1px;
+  outline-color: #7286f7;
+  outline-style: solid;
+}
+
+
+h4{
+    color: #fafbff;
+    font-size: 18px;
+    font-weight: 600;
+    
+}
+
+
+
 </style>    
 
-    
-<!--
-
-<form action="/my-view-url/" method="POST">
-        {% csrf_token %}
-        {% for choice in form.like %}
-    {{ choice.tag }}- {{ choice.choice_label }}
-
-{% endfor %}
-    <button type="submit">Wyślij</button>
-</form>
--->
 <form method="POST">
     {% csrf_token %}
 <div id="container">
-    <div id="profiles">
-        <h3>Wybierz profil</h3>
-        <div class="profil">
-            <label> 
-            <input type="radio" id="blacha" name="my_variable_name" value="Blacha"onclick="showForm('formB')">
-            {% load static %}<img src="{% static 'images/b.png' %}" />
-            </label>
-        </div>
-        
-        <div class="profil">
-            <label>
-            <input type="radio" id="walek" name="my_variable_name" value="Walek" onclick="showForm('formW')"/>
-            {% load static %}<img src="{% static 'images/w.png' %}" />
-            </label>
-        </div>
-        
-        <div class="profil">
-            <label> 
-            <input type="radio" id="rura" name="my_variable_name" value="Rura" onclick="showForm('formR')"/>
-            {% load static %}<img src="{% static 'images/r.png' %}" />
-            </label>
-        </div>
-   
-    </div>
-
-
-<!--      {% if a == 'b' %}
-            Label blacha
-        {% elif a == 'w' %}
-            Label wałek
-            <input type="number" ...>
-            #<button type="submit">przelicz</button>
-       
-            </button>
-        {% else %}
-            Wybierz profil
-        {% endif %}
+    <div id="top">
+        <div id="profiles">
+            <h4>Wybierz profil</h4>
+            <div class="profil">
+                <label> 
+                <input type="radio" id="blacha" name="my_variable_name" value="Blacha"onclick="showForm('formB')">
+                {% load static %}<img src="{% static 'images/b.png' %}" />
+                </label>
+            </div>
+            
+            <div class="profil">
+                <label>
+                <input type="radio" id="walek" name="my_variable_name" value="Walek" onclick="showForm('formW')"/>
+                {% load static %}<img src="{% static 'images/w.png' %}" />
+                </label>
+            </div>
+            
+            <div class="profil">
+                <label> 
+                <input type="radio" id="rura" name="my_variable_name" value="Rura" onclick="showForm('formR')"/>
+                {% load static %}<img src="{% static 'images/r.png' %}" />
+                </label>
+            </div>
     
--->       
-
-
-<div id="labels">
-<form action="">
-    <div class="form">
-        <div id="formB" style="display: none;">
-        <h3>Wprowadź wymiary</h3>
-        <label class="left" for="gr">Grubość:</label>
-        <input class="left2" type="number" id="gr" name="gr"style="float:left;">
-        <label class="left" for="sz">Szerokość:</label>
-        <input class="left2" type="number" id="sz" name="sz">
-        <label class="left" for="dl">Długość:</label>
-        <input class="left2" type="number" id="dl" name="dl">
-        <button type="submit" style="clear:both;">Oblicz</button>
+        </div>
+        <div id="cena">
+            <h4>Podaj cenę zł/kg</h4>
+            
+                <div id="price">
+                    <input class="l" type="number" id="cena" name="cena"step="any" value="0">
+                </div>
+    </div>
+        <div id="gatunek">
+                <h4>Wybór gatunków</h4>
+                {{ form }}
         </div>
     </div>
-    <div class="form">
-        <div class="form" id="formW" style="display: none;">
-        <h3>Wprowadź wymiary</h3>
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email"><br>
-        <label for="phone">Telefon:</label><br>
-        <input type="tel" id="phone" name="phone"><br>
-        <button type="submit">Oblicz</button>
-    </div>
-        
-  </div>
-    <div class="form">
-        <div class="form" id="formR" style="display: none;">
-        <h3>Wprowadź wymiary</h3>
-        <label for="gr">Wprowadź grubość:</label><br>
-        <input type="number" id="gr" name="grubosc"><br>
-        <label for="sz">Wprowadź szerokość:</label><br>
-        <input type="text" id="sz" name="szerokosc"><br>
-        <label for="sz">Wprowadź długość:</label><br>
-        <input type="text" id="dl" name="dlugosc"><br>
-        <button type="submit">Oblicz</button>
-    </div>
-        
-  </div>
+    <div id="labels">
+    <form action="">
+        <div class="form">
+            <div id="formB" style="display: none;">
+            <h4>Wprowadź wymiary</h4>
+            <div class="entry">
+                <label class="label" for="gr">Grubość [mm]:</label>
+                <div class="quantity">
+                    <input class="left2" type="number" id="gr" name="gr"step="any">
+                </div>
+            </div>
+            <div class="entry">
+                <label class="label" for="sz">Szerokość [mm]:</label>
+                <div class="quantity">
+                    <input class="left2" type="number" id="sz" name="sz" step="any">
+                </div>
+            </div>
+            <div class="entry">
+                <label class="label" for="dl">Długość [mm]:</label>
+                <div class="quantity">
+                    <input class="left2" type="number" id="dl" name="dl" step="any">
+                </div>
+            </div>
+            <div class="entry">
+                <button type="submit" style="clear:both;">Oblicz</button>
+            </div>
+        </div>
+        </div>
+        <div class="form">
+            <div class="form" id="formW" style="display: none;">
+                <h4>Wprowadź wymiary</h4>
+            
+                <div class="entry">
+                    <label class="label" for="sr">Średnica:</label>
+                    <div class="quantity">
+                        <input class="left2" type="number" id="sr" name="sr" step="any">
+                    </div>
+                </div>
+                <div class="entry">
+                    <label class="label" for="d">Długość:</label>
+                    <div class="quantity">
+                        <input class="left2" type="number" id="d" name="d" step="any">
+                    </div>
+                </div>
+                
+                <button type="submit" >Oblicz</button>
+                </div>
+        </div>
+        </div>
+        <div class="form">
+                <div class="form" id="formR" style="display: none;">
+                <h3>Wprowadź wymiary</h3>
+                <label for="gr">Wprowadź grubość:</label><br>
+                <input type="number" id="gr" name="grubosc"><br>
+                <label for="sz">Wprowadź szerokość:</label><br>
+                <input type="text" id="sz" name="szerokosc"><br>
+                <label for="sz">Wprowadź długość:</label><br>
+                <input type="text" id="dl" name="dlugosc"><br>
+                <button type="submit">Oblicz</button>
+            </div>
+                
+        </div>
+    
 </form>
 </div>
 {% if result == 0 %}
@@ -215,6 +308,5 @@ function showForm(formId) {
     form3.style.display = "block";
 }}
 </script>
-
 
 {% endblock %}

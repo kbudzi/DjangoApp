@@ -74,13 +74,12 @@ class Gatunek(models.Model):
     gestosc = models.DecimalField(max_digits=6, decimal_places=2, null=False)
 
 class Kalkulator(models.Model):
-    typ = {
-        ('NO', "NO"),
-        ('YES', "YES")
-    }
-    profil = models.PositiveBigIntegerField(default=0, choices=typ)
-    gatunek = models.ForeignKey(Gatunek, on_delete=models.CASCADE,default=1,null=False)
+    
+    profil = models.CharField(null=False, max_length=20)
+    gatunek = models.ForeignKey(Gatunek, on_delete=models.CASCADE,default=1,null=True)
     srednica=models.DecimalField(max_digits=6, decimal_places=2, null=True)
     szerokosc=models.DecimalField(max_digits=6, decimal_places=2, null=True)
-    grubosc=models.DecimalField(max_digits=6, decimal_places=2, null=False)
-    dlugosc=models.DecimalField(max_digits=6, decimal_places=2, null=False)
+    grubosc=models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    dlugosc=models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    wartosc=models.DecimalField(max_digits=6, decimal_places=2, null=True, default=0)
+    waga=models.DecimalField(max_digits=8, decimal_places=2, null=True)

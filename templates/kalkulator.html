@@ -36,8 +36,9 @@
 
 }
 #top{
-    width: 700px;
+    width: 800px;
     margin: 0 auto;
+    
 }
 #profiles{
     width: 500px;
@@ -49,7 +50,7 @@
     
 }
 #gatunek{
-    width: 200px;
+    width: 150px;
     height: 100px;
     background-color: rgba(209, 145, 61, 0.253);
     color: black;
@@ -57,7 +58,38 @@
     float:left
     
 }
+#cena{
+    
+    width: 150px;
+    
+    
+    color: black;
+    text-align: center;
+    float:left
+    
+}
+#price{
+    overflow: hidden;
+    
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 2px
+    
 
+}
+
+#price:hover {
+    box-shadow: 1px 1px #7286f7;
+    
+    
+    
+}
+
+
+#price input {
+    width: 100%
+    
+}
 .profil
 {
     
@@ -116,7 +148,7 @@
 
 
 .quantity input {
-  width: 100px;
+  width: 120px;
   height: 26px;
   line-height: 1.65;
   padding: 0;
@@ -143,18 +175,6 @@ h4{
 
 </style>    
 
-    
-<!--
-
-<form action="/my-view-url/" method="POST">
-        {% csrf_token %}
-        {% for choice in form.like %}
-    {{ choice.tag }}- {{ choice.choice_label }}
-
-{% endfor %}
-    <button type="submit">Wyślij</button>
-</form>
--->
 <form method="POST">
     {% csrf_token %}
 <div id="container">
@@ -183,6 +203,13 @@ h4{
             </div>
     
         </div>
+        <div id="cena">
+            <h4>Podaj cenę zł/kg</h4>
+            
+                <div id="price">
+                    <input class="l" type="number" id="cena" name="cena"step="any" value="0">
+                </div>
+    </div>
         <div id="gatunek">
                 <h4>Wybór gatunków</h4>
                 {{ form }}
@@ -194,19 +221,19 @@ h4{
             <div id="formB" style="display: none;">
             <h4>Wprowadź wymiary</h4>
             <div class="entry">
-                <label class="label" for="gr">Grubość:</label>
+                <label class="label" for="gr">Grubość [mm]:</label>
                 <div class="quantity">
                     <input class="left2" type="number" id="gr" name="gr"step="any">
                 </div>
             </div>
             <div class="entry">
-                <label class="label" for="sz">Szerokość:</label>
+                <label class="label" for="sz">Szerokość [mm]:</label>
                 <div class="quantity">
                     <input class="left2" type="number" id="sz" name="sz" step="any">
                 </div>
             </div>
             <div class="entry">
-                <label class="label" for="dl">Długość:</label>
+                <label class="label" for="dl">Długość [mm]:</label>
                 <div class="quantity">
                     <input class="left2" type="number" id="dl" name="dl" step="any">
                 </div>
@@ -221,9 +248,9 @@ h4{
                 <h4>Wprowadź wymiary</h4>
             
                 <div class="entry">
-                    <label class="label" for="sz">Średnica:</label>
+                    <label class="label" for="sr">Średnica:</label>
                     <div class="quantity">
-                        <input class="left2" type="number" id="r" name="r" step="any">
+                        <input class="left2" type="number" id="sr" name="sr" step="any">
                     </div>
                 </div>
                 <div class="entry">

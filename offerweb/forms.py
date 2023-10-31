@@ -40,7 +40,7 @@ class TechnologiaForm(ModelForm):
 class GatunekForm(ModelForm):
     class Meta:
         model = Gatunek
-        fields = ['nazwa']
+        fields = ['nazwa', 'gestosc']
 
 class WalekForm(ModelForm):
     class Meta:
@@ -49,7 +49,9 @@ class WalekForm(ModelForm):
         fields=[
         'gatunek',
         'srednica',
-        'dlugosc',]
+        'dlugosc',
+        'waga',
+        'wartosc',]
 class BlachaForm(ModelForm):
     class Meta:
         model = Kalkulator
@@ -58,12 +60,14 @@ class BlachaForm(ModelForm):
         'gatunek',
         'szerokosc',
         'grubosc',
-        'dlugosc',]
+        'dlugosc',
+        'waga',
+        'wartosc',]
 
 
 class Fgatunek(forms.Form):
     fields = 'nazwa'
     #lista = forms.ModelChoiceField(queryset=Gatunek.objects.values_list(fields).distinct(),
     #empty_label=None)
-    lista = forms.ModelChoiceField(required = True,label='nazwa',queryset=Gatunek.objects.values_list("nazwa", flat=True))
+    lista = forms.ModelChoiceField(queryset=Gatunek.objects.values_list("nazwa", flat=True),empty_label='--------', label='')
 

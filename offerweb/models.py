@@ -81,3 +81,5 @@ class Kalkulator(models.Model):
     szerokosc=models.DecimalField(max_digits=6, decimal_places=2, null=True)
     grubosc=models.DecimalField(max_digits=6, decimal_places=2, null=True)
     dlugosc=models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    wartosc=models.DecimalField(max_digits=6, decimal_places=2, null=True, default=0)
+    waga=models.DecimalField(max_digits=8, decimal_places=2, null=True)

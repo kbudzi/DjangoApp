@@ -238,41 +238,53 @@ def kalkulator(request):
     blacha_form= BlachaForm(request.POST or None)
     walek_form= WalekForm(request.POST or None)
     #select = Fgatunek(request.POST or None) #lista rozwijalna stworzona w forms
-    #form =Fgatunek()
+    gatunek =Gatunek.objects.all()
     form = Fgatunek()
     a = 0
     result=0
-    
     if request.method == 'POST':
-        
         if request.method == 'POST':
-            # Tutaj możesz obsłużyć odpowiedź po wybraniu przycisku radio
-            #selected_option = form.cleaned_data.get('like')
-            my_variable = request.POST.get('my_variable_name')
-            
-            #if selected_option == 'YES':
+            my_variable = request.POST.get('my_variable_name') #wybór gatunku
+            price = request.POST.get('cena') #cena z template
+            price2=float(price)
             if my_variable == 'Blacha':
                 sz = request.POST.get('sz')
                 gr = request.POST.get('gr')
                 dl = request.POST.get('dl')
-                blach=Kalkulator(dlugosc=dl,grubosc=gr,szerokosc=sz,profil=my_variable)
-                blach.save()
-                result=float(sz)*float(gr)*float(dl)
-                print(result)
-                
+        
                 g=request.POST.get('lista')
-       
-                print(g)
+                for m in gatunek:
+                    if g==m.nazwa:
+                        choise=m.gestosc
+                result= float(sz)*float(gr)*float(dl)*float(choise)/1000000
+                
+                if float(price) > 0:
+                    cost= float(price)*float(result)
+                    
+                else:
+                    cost= 0
+                blach=Kalkulator(dlugosc=dl,grubosc=gr,szerokosc=sz,profil=my_variable,waga=result, wartosc=cost)
+                
+                blach.save()
             elif my_variable == 'Walek':
-                print("wybrałem wałek")
-                a='w'
-                print('a')
-                #form = WalekForm(initial={'like':'NO'})
+                sr = request.POST.get('sr')
+                
+                d = request.POST.get('d')
+                blach=Kalkulator(dlugosc=d,grubosc=sr,profil=my_variable)
+                blach.save()
+                print(result)
+                g=request.POST.get('lista')
+                for m in gatunek:
+                    if g==m.nazwa:
+                        choise=m.gestosc
+                result= float(sr)*float(d)*float(choise)/1000000
+                if price > 0:
+                    cost = float(price)*float(result)
+
             elif my_variable == 'Rura':
                 print("wybrałem rurę")
                 a='r'
                 print(a)
     else:
         print('chu')
-
     return render(request, 'kalkulator.html', {'form': form, 'blacha_form':blacha_form,'a':a, 'walek_form':walek_form,'result':result})

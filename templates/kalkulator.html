@@ -30,65 +30,88 @@
 
 #container
 {
-    background-color: rgba(0, 255, 255, 0.164);
+    
     margin: 0;
     width: auto;
 
 }
 #top{
-    width: 800px;
+    width: 850px;
     margin: 0 auto;
+    
     
 }
 #profiles{
-    width: 500px;
+    width: 450px;
     height: 100px;
-    background-color: rgba(250, 235, 215, 0.253);
+    
     color: black;
     text-align: center;
     float:left
     
 }
-#gatunek{
-    width: 150px;
-    height: 100px;
-    background-color: rgba(209, 145, 61, 0.253);
-    color: black;
-    text-align: center;
-    float:left
-    
-}
+
+
 #cena{
-    
     width: 150px;
-    
     
     color: black;
     text-align: center;
-    float:left
+    float:left;
+    
     
 }
-#price{
-    overflow: hidden;
+#gatunek
+{
+    width: 150px;
+    height: 100px;
+    text-align: center;
+    float:left;
     
-    margin: 8px 0;
+}
+
+#price
+{
+    overflow: hidden;
+    height: 34px;
+    margin: 6px 0;
     box-sizing: border-box;
     border-radius: 2px
     
 
 }
+.price
+{
+    height: 34px;
+}
+#dodaj_gatunek
+{
+    
+    float:left;
+    
 
-#price:hover {
-    box-shadow: 1px 1px #7286f7;
-    
-    
     
 }
 
 
-#price input {
-    width: 100%
+#price:hover {
+    box-shadow: 1px 1px #37373a;
     
+
+}
+
+
+.btn{
+    
+    padding: 15px;
+    
+    
+}
+#btn:hover {
+
+    color: #216a94;
+    text-decoration: underline;
+
 }
 .profil
 {
@@ -99,46 +122,78 @@
 #labels
 {
     
-    width: 700px;
+    width: 850px;
     height: 150px;
     background-color: rgba(250, 235, 215, 0.253);
     color: black;
     text-align: center;  
-    margin: 1px auto;
+    margin: 2px auto;
     clear: both;
     
     
 }
+#results
+{
+    
+    width: 850px;
+    height: 100px;
+    background-color: rgba(250, 235, 215, 0.253);
+    color: black;
+    text-align: center;  
+    margin: 1px auto;
+    
+    
+    clear: both;
+}
+#result
+{
+    float: left;
+    padding: 20px;
+    color: aqua;
+    text-align: center;
+    margin: 0;
+    width: 425px;
+    font-size: 30px;
 
-
+}
+#weight
+{
+    float: right;
+    padding: 20px;
+    text-align: center;
+    margin: 0;
+    width: 425px;
+    font-size: 30px;
+    color: aqua;
+    
+    
+}
 
 .entry
 {
     display: inline-block;
     padding: 10px 20px;
+    
+    
 }
 
 .left2 {
     overflow: hidden;
-    float:left;
-    padding: 0 4px 0 10px;   
     
+    padding: 15px 0px 10px 144px;   
     margin: 8px 0;
     box-sizing: border-box;
     border-radius: 2px
-    
-
 }
+
 .left2:hover {
     box-shadow: 1px 1px #7286f7;
-    
-    
-    
 }
 
 
 .left2 input {
     width: 100%
+    
     
 }
 .quantity {
@@ -170,8 +225,23 @@ h4{
     font-weight: 600;
     
 }
+.btn2{
+    
+    float: right;
+    margin: auto;
+    padding-right: 20px;
+    text-decoration: underline;
 
+}
 
+.calculate{
+    color:yellow;
+    text-align: center;
+    
+    background-color: none;
+    background-color: rgba(240, 248, 255, 0);
+    
+}
 
 </style>    
 
@@ -207,14 +277,25 @@ h4{
             <h4>Podaj cenę zł/kg</h4>
             
                 <div id="price">
-                    <input class="l" type="number" id="cena" name="cena"step="any" value="0">
+                    <input class="price" type="number" id="cena" name="cena"step="any" value="0">
                 </div>
-    </div>
+        </div>
         <div id="gatunek">
                 <h4>Wybór gatunków</h4>
                 {{ form }}
         </div>
     </div>
+
+
+    <div id="dodaj_gatunek">
+        <a class="btn" href="{% url 'nowy_gatunek' %}" >
+            <button type="button" onclick="document.getElementById('myForm').submit();" style="background-color: rgba(255, 0, 255, 0); color: #549fca; border: none;"><i class="fa-solid fa-plus fa-4x"></i></button>
+            
+        </a>  
+       
+    </div>
+
+
     <div id="labels">
     <form action="">
         <div class="form">
@@ -238,53 +319,91 @@ h4{
                     <input class="left2" type="number" id="dl" name="dl" step="any">
                 </div>
             </div>
-            <div class="entry">
-                <button type="submit" style="clear:both;">Oblicz</button>
-            </div>
+            <div class="btn2">
+                <button class="calculate" type="submit" style="border: none;"><i class="fa-solid fa-calculator fa-5x"></i><br>Oblicz</button>
+                </div>
         </div>
         </div>
         <div class="form">
-            <div class="form" id="formW" style="display: none;">
+            <div class="formW" id="formW" style="display: none;">
                 <h4>Wprowadź wymiary</h4>
             
                 <div class="entry">
-                    <label class="label" for="sr">Średnica:</label>
+                    <label class="label" for="sr">Średnica [mm]:</label>
                     <div class="quantity">
                         <input class="left2" type="number" id="sr" name="sr" step="any">
                     </div>
                 </div>
                 <div class="entry">
-                    <label class="label" for="d">Długość:</label>
+                    <label class="label" for="d">Długość [mm]:</label>
                     <div class="quantity">
                         <input class="left2" type="number" id="d" name="d" step="any">
                     </div>
                 </div>
-                
-                <button type="submit" >Oblicz</button>
+                <div class="btn2">
+                <button class="calculate" type="submit" style="border: none;"><i class="fa-solid fa-calculator fa-5x"></i><br>Oblicz</button>
                 </div>
-        </div>
-        </div>
-        <div class="form">
-                <div class="form" id="formR" style="display: none;">
-                <h3>Wprowadź wymiary</h3>
-                <label for="gr">Wprowadź grubość:</label><br>
-                <input type="number" id="gr" name="grubosc"><br>
-                <label for="sz">Wprowadź szerokość:</label><br>
-                <input type="text" id="sz" name="szerokosc"><br>
-                <label for="sz">Wprowadź długość:</label><br>
-                <input type="text" id="dl" name="dlugosc"><br>
-                <button type="submit">Oblicz</button>
             </div>
+        </div>
+        
+        <div class="form">
+                <div class="formR" id="formR" style="display: none;">
+                    <h4>Wprowadź wymiary</h4>
+                    <div class="entry">
+                        <label class="label" for="rsr">Średnica zewn.[mm]:</label>
+                        <div class="quantity">
+                            <input class="left2" type="number" id="rsr" name="rsr" step="any">
+                        </div>
+                    </div>
+                    <div class="entry">
+                        <label class="label" for="rgs">Grubość ścianki [mm]:</label>
+                        <div class="quantity">
+                            <input class="left2" type="number" id="rgs" name="rgs" step="any">
+                        </div>
+                    </div>
+                    <div class="entry">
+                        <label class="label" for="rd">Długość [mm]:</label>
+                        <div class="quantity">
+                            <input class="left2" type="number" id="rd" name="rd" step="any">
+                        </div>
+                    </div>
+                    
+                    <div class="btn2">
+                        <button class="calculate" type="submit" style="border: none;"><i class="fa-solid fa-calculator fa-5x"></i><br>Oblicz</button>
+                        </div>
+                </div>
                 
         </div>
+        
     
-</form>
+    
+    </form>    
+    </div>
+    <div id="results">
+        <div id="Materiał">
+            <Span>Waga</Span><br>
+        
+        </div>
+        <div id="result">
+            <Span>Waga</Span><br>
+        {% if result == 0 %}
+            ----
+        {% else %}
+            {{ result}} kg
+        {% endif %}
+        </div>
+        <div id="weight">
+            <Span>Wartość</Span><br>
+        {% if cost == 0 %}
+            ----
+        {% else %}
+            {{cost}} zł
+        {% endif %}
+        </div>
+    </div>
 </div>
-{% if result == 0 %}
-    ----
-{% else %}
-    {{result}}
-{% endif %}
+
+
             
 
 <!-- Skrypty -->

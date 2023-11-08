@@ -11,6 +11,7 @@ from .filters import ListingFilter
 from django.urls import reverse_lazy
 from bootstrap_modal_forms.generic import BSModalCreateView
 from django.template import loader
+import math
 
 def glowna(request):
     
@@ -242,49 +243,60 @@ def kalkulator(request):
     form = Fgatunek()
     a = 0
     result=0
+    cost=0
     if request.method == 'POST':
         if request.method == 'POST':
-            my_variable = request.POST.get('my_variable_name') #wybór gatunku
+            my_variable = request.POST.get('my_variable_name') #wybór profilu
             price = request.POST.get('cena') #cena z template
-            price2=float(price)
+            
             if my_variable == 'Blacha':
                 sz = request.POST.get('sz')
                 gr = request.POST.get('gr')
                 dl = request.POST.get('dl')
-        
-                g=request.POST.get('lista')
+                g=request.POST.get('lista')#wybór gatunku
                 for m in gatunek:
                     if g==m.nazwa:
                         choise=m.gestosc
-                result= float(sz)*float(gr)*float(dl)*float(choise)/1000000
-                
-                if float(price) > 0:
+                        choise_id=m.id
+                result= round(float(sz)*float(gr)*float(dl)*float(choise)/1000000, 2)
+                try:
                     cost= float(price)*float(result)
-                    
-                else:
-                    cost= 0
-                blach=Kalkulator(dlugosc=dl,grubosc=gr,szerokosc=sz,profil=my_variable,waga=result, wartosc=cost)
-                
+                except ValueError:
+                    cost=0
+                blach=Kalkulator(dlugosc=dl,grubosc=gr,szerokosc=sz,profil=my_variable,waga=result, wartosc=cost,gatunek_id=choise_id)
                 blach.save()
             elif my_variable == 'Walek':
                 sr = request.POST.get('sr')
-                
                 d = request.POST.get('d')
-                blach=Kalkulator(dlugosc=d,grubosc=sr,profil=my_variable)
-                blach.save()
-                print(result)
-                g=request.POST.get('lista')
+                g=request.POST.get('lista') #wybór gatunku
                 for m in gatunek:
                     if g==m.nazwa:
                         choise=m.gestosc
-                result= float(sr)*float(d)*float(choise)/1000000
-                if price > 0:
-                    cost = float(price)*float(result)
-
+                        choise_id=m.id
+                result= round((float(sr)/2)**2*math.pi*float(d)*float(choise)/1000000,2)
+                try:
+                    cost= float(price)*float(result)
+                except ValueError:
+                    cost=0
+                blach=Kalkulator(dlugosc=d,srednica=sr,profil=my_variable,waga=result,wartosc=cost,gatunek_id=choise_id)
+                blach.save()
+              
             elif my_variable == 'Rura':
-                print("wybrałem rurę")
-                a='r'
-                print(a)
+                rsr = request.POST.get('rsr')
+                rgs = request.POST.get('rgs')
+                rd = request.POST.get('rd')
+                g=request.POST.get('lista') #wybór gatunku
+                for m in gatunek:
+                    if g==m.nazwa:
+                        choise=m.gestosc
+                        choise_id=m.id
+                result= round(((float(rsr)/2)**2*math.pi*float(rd)*float(choise)/1000000)-(((float(rsr)-(float(rgs)*2))/2)**2*math.pi*float(rd)*float(choise)/1000000),2)
+                try:
+                    cost= float(price)*float(result)
+                except ValueError:
+                    cost=0
+                blach=Kalkulator(dlugosc=rd,srednica=rsr,profil=my_variable,waga=result,wartosc=cost,gatunek_id=choise_id)
+                blach.save()
     else:
         print('chu')
-    return render(request, 'kalkulator.html', {'form': form, 'blacha_form':blacha_form,'a':a, 'walek_form':walek_form,'result':result})
+    return render(request, 'kalkulator.html', {'form': form, 'blacha_form':blacha_form, 'walek_form':walek_form,'result':result,'cost':cost})

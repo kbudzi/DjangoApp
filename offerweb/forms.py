@@ -71,3 +71,16 @@ class Fgatunek(forms.Form):
     #empty_label=None)
     lista = forms.ModelChoiceField(queryset=Gatunek.objects.values_list("nazwa", flat=True),empty_label='--------', label='')
 
+class KalkulatorForm(ModelForm):
+        class Meta:
+            model = Kalkulator
+            
+            fields=[
+            'profil',
+            'gatunek',
+            'srednica',
+            'szerokosc',
+            'grubosc',
+            'dlugosc',
+            'wartosc',
+            'waga',]

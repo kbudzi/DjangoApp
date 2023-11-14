@@ -238,12 +238,12 @@ def nowy_gatunek(request):
 def kalkulator(request):
     blacha_form= BlachaForm(request.POST or None)
     walek_form= WalekForm(request.POST or None)
-    #select = Fgatunek(request.POST or None) #lista rozwijalna stworzona w forms
     gatunek =Gatunek.objects.all()
     form = Fgatunek()
-    a = 0
+    last = 0
     result=0
     cost=0
+
     if request.method == 'POST':
         if request.method == 'POST':
             my_variable = request.POST.get('my_variable_name') #wybór profilu
@@ -259,8 +259,12 @@ def kalkulator(request):
                         choise=m.gestosc
                         choise_id=m.id
                 result= round(float(sz)*float(gr)*float(dl)*float(choise)/1000000, 2)
+                info1 = 'Blacha'+' - '+g
+                info2 = 'Szerokość'+' - '+sz+' mm'
+                info3 = 'Grubość'+' - '+gr+' mm'
+                info4 = 'Długość'+' - '+dl+' mm'
                 try:
-                    cost= float(price)*float(result)
+                    cost= round(float(price)*float(result),2)
                 except ValueError:
                     cost=0
                 blach=Kalkulator(dlugosc=dl,grubosc=gr,szerokosc=sz,profil=my_variable,waga=result, wartosc=cost,gatunek_id=choise_id)
@@ -274,6 +278,11 @@ def kalkulator(request):
                         choise=m.gestosc
                         choise_id=m.id
                 result= round((float(sr)/2)**2*math.pi*float(d)*float(choise)/1000000,2)
+                info1 = 'Pręt'+' - '+g
+                info2 = 'Średnica'+' - '+sr+' mm'
+
+                info3 = 'Długość'+' - '+d+' mm'
+                info4 = ''
                 try:
                     cost= float(price)*float(result)
                 except ValueError:
@@ -299,4 +308,4 @@ def kalkulator(request):
                 blach.save()
     else:
         print('chu')
-    return render(request, 'kalkulator.html', {'form': form, 'blacha_form':blacha_form, 'walek_form':walek_form,'result':result,'cost':cost})
+    return render(request, 'kalkulator.html', {'form': form, 'blacha_form':blacha_form, 'walek_form':walek_form,'result':result,'cost':cost,'info1':info1,'info4':info4,'info2':info2,'info3':info3,})

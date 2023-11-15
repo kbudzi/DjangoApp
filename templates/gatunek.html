@@ -4,49 +4,39 @@
 
 {% block strona %}
 
-    
-    <h2><a href="{% url 'kalkulator' %}">Przejdź do kalkulatora</a></h2>
-    
+    <a class="btn" href="{% url 'kalkulator' %}" >
+      <button type="button" style="background-color: rgba(255, 0, 255, 0); color: #549fca; border: solid;">Kalkulator</button>
+    </a> 
 
     <table class="table">
         <thead>
           <h2>Gatunki materiałów:</h2>
-      
-          
+
           <a href="{% url 'nowy_gatunek' %}"><i class="fa-sharp fa-2x fa-solid fa-circle-plus"></i></a>
-          
-          </p>
-      
+
           <tr>
-            
             <th>Numer gatunku</th>
             <th>Gęstość [g/cm^3]</th>
             <th>Opcje</th>
-            
           </tr>
         </thead>
         
-          
           {% for gatunek in gatunki %}
          <tbody> 
           <tr>
             
             <td>{{gatunek.nazwa}}</td>
-            <td>{{gatunek.gestosc}}</td>
+            <td style="text-align: center;">{{gatunek.gestosc}}</td>
             
-            <td> <a href=""><i class="fa-solid fa-magnifying-glass"></i></a>
+            <td> 
               <a href=""><i class="fa-solid fa-pen-to-square"></i></a>
-              <a href=""><i class="fa-solid  fa-trash-can"></i></a>
+              <a href="{% url 'usun_gatunek' gatunek.id %}"><i class="fa-solid  fa-trash-can"></i></a>
              </td> 
-          </tr>
-          
-              
+          </tr>  
               
           {% endfor %}
           
         </tbody>
       </table>
-
-    
 
 {% endblock %}

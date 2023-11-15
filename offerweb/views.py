@@ -12,6 +12,7 @@ from django.urls import reverse_lazy
 from bootstrap_modal_forms.generic import BSModalCreateView
 from django.template import loader
 import math
+from django.contrib import messages
 
 def glowna(request):
     
@@ -231,19 +232,30 @@ def nowy_gatunek(request):
     gatunek_form =GatunekForm(request.POST or None)
     if gatunek_form.is_valid():
         gatunek_form.save()
-        return redirect('kalkulator')
+        return redirect('gatunek')
         
     return render(request, 'nowy_gatunek.html',{'gatunek_form': gatunek_form})
-    
+
+def usun_gatunek(request,id):
+    gatunek = get_object_or_404(Gatunek, pk=id)
+    if request.method == "POST":
+        gatunek.delete()
+        return redirect ('gatunek')
+
+    return render(request, 'usun_gatunek.html',{'gatunek': gatunek})
+
 def kalkulator(request):
     blacha_form= BlachaForm(request.POST or None)
     walek_form= WalekForm(request.POST or None)
-    #select = Fgatunek(request.POST or None) #lista rozwijalna stworzona w forms
     gatunek =Gatunek.objects.all()
     form = Fgatunek()
-    a = 0
+    info1 = ''
+    info2 = ''
+    info3 = ''
+    info4 = ''
     result=0
     cost=0
+
     if request.method == 'POST':
         if request.method == 'POST':
             my_variable = request.POST.get('my_variable_name') #wybór profilu
@@ -259,10 +271,15 @@ def kalkulator(request):
                         choise=m.gestosc
                         choise_id=m.id
                 result= round(float(sz)*float(gr)*float(dl)*float(choise)/1000000, 2)
+                info1 = 'Blacha'+' - '+g
+                info2 = 'Szerokość'+' - '+sz+' mm'
+                info3 = 'Grubość'+' - '+gr+' mm'
+                info4 = 'Długość'+' - '+dl+' mm'
                 try:
-                    cost= float(price)*float(result)
+                    cost= round(float(price)*float(result),2)
                 except ValueError:
                     cost=0
+                
                 blach=Kalkulator(dlugosc=dl,grubosc=gr,szerokosc=sz,profil=my_variable,waga=result, wartosc=cost,gatunek_id=choise_id)
                 blach.save()
             elif my_variable == 'Walek':
@@ -274,8 +291,13 @@ def kalkulator(request):
                         choise=m.gestosc
                         choise_id=m.id
                 result= round((float(sr)/2)**2*math.pi*float(d)*float(choise)/1000000,2)
+                info1 = 'Pręt'+' - '+g
+                info2 = 'Średnica'+' - '+sr+' mm'
+
+                info3 = 'Długość'+' - '+d+' mm'
+                info4 = ''
                 try:
-                    cost= float(price)*float(result)
+                    cost= round(float(price)*float(result),2)
                 except ValueError:
                     cost=0
                 blach=Kalkulator(dlugosc=d,srednica=sr,profil=my_variable,waga=result,wartosc=cost,gatunek_id=choise_id)
@@ -290,13 +312,41 @@ def kalkulator(request):
                     if g==m.nazwa:
                         choise=m.gestosc
                         choise_id=m.id
-                result= round(((float(rsr)/2)**2*math.pi*float(rd)*float(choise)/1000000)-(((float(rsr)-(float(rgs)*2))/2)**2*math.pi*float(rd)*float(choise)/1000000),2)
+                if float(rgs)<(float(rsr)/2):
+                    result= round(((float(rsr)/2)**2*math.pi*float(rd)*float(choise)/1000000)-(((float(rsr)-(float(rgs)*2))/2)**2*math.pi*float(rd)*float(choise)/1000000),2)
+                else:
+                    print('podaj właściwą wartość')
+                    messages.warning(request, 'Podaj właściwe wymiary!!!')
+
+                info1 = 'Rura'+' - '+g
+                info2 = 'Średnica'+' - '+rsr+' mm'
+
+                info3 = 'Grubość ścianki'+' - '+rgs+' mm'
+                info4 = 'Długość'+' - '+rd+' mm'
                 try:
-                    cost= float(price)*float(result)
+                    cost= round(float(price)*float(result),2)
                 except ValueError:
                     cost=0
-                blach=Kalkulator(dlugosc=rd,srednica=rsr,profil=my_variable,waga=result,wartosc=cost,gatunek_id=choise_id)
+                blach=Kalkulator(dlugosc=rd,srednica=rsr,grubosc_scianki=rgs,profil=my_variable,waga=result,wartosc=cost,gatunek_id=choise_id)
+                blach.save()
+
+            elif my_variable == 'Rurakw':
+                rsr = request.POST.get('bok')
+                rgs = request.POST.get('rgs')
+                rd = request.POST.get('rd')
+                g=request.POST.get('lista') #wybór gatunku
+                for m in gatunek:
+                    if g==m.nazwa:
+                        choise=m.gestosc
+                        choise_id=m.id
+                result= round(((float(rsr)/2)**2*math.pi*float(rd)*float(choise)/1000000)-(((float(rsr)-(float(rgs)*2))/2)**2*math.pi*float(rd)*float(choise)/1000000),2)
+                try:
+                    cost= round(float(price)*float(result),2)
+                except ValueError:
+                    cost=0
+                messages.success(request, "cena 0" )
+                blach=Kalkulator(dlugosc=rd,srednica=rsr,grubosc_scianki=rgs, profil=my_variable,waga=result,wartosc=cost,gatunek_id=choise_id)
                 blach.save()
     else:
-        print('chu')
-    return render(request, 'kalkulator.html', {'form': form, 'blacha_form':blacha_form, 'walek_form':walek_form,'result':result,'cost':cost})
+        print('STOP')
+    return render(request, 'kalkulator.html', {'form': form, 'blacha_form':blacha_form, 'walek_form':walek_form,'result':result,'cost':cost,'info1':info1,'info4':info4,'info2':info2,'info3':info3,})

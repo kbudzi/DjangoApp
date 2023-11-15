@@ -1,0 +1,14 @@
+{% extends 'glowny.html' %}
+
+{% block tytul %} Usun gatunek {% endblock %}
+
+{% block strona %}
+
+<h2>Czy na pewno chcesz usunąć gatunek "{{ gatunek.nazwa }}"?</h2>
+<form method="post">
+    {% csrf_token %}   
+    <button type="submit" style="color: red;">Usuń gatunek</button>
+    
+</form> 
+
+{% endblock %}

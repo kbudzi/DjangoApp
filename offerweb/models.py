@@ -83,3 +83,4 @@ class Kalkulator(models.Model):
     dlugosc=models.DecimalField(max_digits=8, decimal_places=2, null=True)
     wartosc=models.DecimalField(max_digits=10, decimal_places=2, null=True, default=0)
     waga=models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    grubosc_scianki=models.DecimalField(max_digits=6, decimal_places=2, null=True)

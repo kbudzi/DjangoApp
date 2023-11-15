@@ -289,19 +289,19 @@ h4{
             </div>
             <div class="profil">
                 <label> 
-                <input type="radio" id="rura" name="my_variable_name" value="Rurakw" onclick="showForm('')"/>
+                <input type="radio" id="rurakw" name="my_variable_name" value="Rurakw" onclick="showForm('formRK')"/>
                 {% load static %}<img src="{% static 'images/rk.png' %}" />
                 </label>
             </div>
             <div class="profil">
                 <label> 
-                <input type="radio" id="rura" name="my_variable_name" value="Pkw" onclick="showForm('')"/>
+                <input type="radio" id="profil" name="my_variable_name" value="Pkw" onclick="showForm('formPP')"/>
                 {% load static %}<img src="{% static 'images/pp.png' %}" />
                 </label>
             </div>
             <div class="profil">
                 <label> 
-                <input type="radio" id="rura" name="my_variable_name" value="Psz" onclick="showForm('')"/>
+                <input type="radio" id="pretsz" name="my_variable_name" value="Psz" onclick="showForm('formPSZ')"/>
                 {% load static %}<img src="{% static 'images/sz.png' %}" />
                 </label>
             </div>
@@ -404,6 +404,7 @@ h4{
                             <input class="left2" type="number" id="rd" name="rd" step="any">
                         </div>
                     </div>
+
                     
                     <div class="btn2">
                         <button class="calculate" type="submit" style="border: none;"><i class="fa-solid fa-calculator fa-5x"></i><br>Oblicz</button>
@@ -411,8 +412,91 @@ h4{
                 </div>
                 
         </div>
+        <div class="form">
+            <div class="formRK" id="formRK" style="display: none;">
+                <h4>Wprowadź wymiary</h4>
+                <div class="entry">
+                    <label class="label" for="rsr">Bok[mm]:</label>
+                    <div class="quantity">
+                        <input class="left2" type="number" id="rsr" name="bok" step="any">
+                    </div>
+                </div>
+                <div class="entry">
+                    <label class="label" for="rgs">Grubość ścianki [mm]:</label>
+                    <div class="quantity">
+                        <input class="left2" type="number" id="rgs" name="gsk" step="any">
+                    </div>
+                </div>
+                <div class="entry">
+                    <label class="label" for="rd">Długość [mm]:</label>
+                    <div class="quantity">
+                        <input class="left2" type="number" id="rd" name="rkd" step="any">
+                    </div>
+                </div>
+                
+                <div class="btn2">
+                    <button class="calculate" type="submit" style="border: none;"><i class="fa-solid fa-calculator fa-5x"></i><br>Oblicz</button>
+                    </div>
+            </div>
+            
+    </div>
         
+    <div class="form">
+        <div class="formPP" id="formPP" style="display: none;">
+            <h4>Wprowadź wymiary</h4>
+            <div class="entry">
+                <label class="label" for="gPP">Grubość[mm]:</label>
+                <div class="quantity">
+                    <input class="left2" type="number" id="gPP" name="bok" step="any">
+                </div>
+            </div>
+            <div class="entry">
+                <label class="label" for="szPP">Szerokość[mm]:</label>
+                <div class="quantity">
+                    <input class="left2" type="number" id="szPP" name="bok" step="any">
+                </div>
+            </div>
+            <div class="entry">
+                <label class="label" for="rgs">Grubość ścianki [mm]:</label>
+                <div class="quantity">
+                    <input class="left2" type="number" id="rgs" name="gsk" step="any">
+                </div>
+            </div>
+            <div class="entry">
+                <label class="label" for="rd">Długość [mm]:</label>
+                <div class="quantity">
+                    <input class="left2" type="number" id="rd" name="rkd" step="any">
+                </div>
+            </div>
+            
+            <div class="btn2">
+                <button class="calculate" type="submit" style="border: none;"><i class="fa-solid fa-calculator fa-5x"></i><br>Oblicz</button>
+                </div>
+        </div>
+        
+</div><div class="form">
+    <div class="formPSZ" id="formPSZ" style="display: none;">
+        <h4>Wprowadź wymiary</h4>
+        <div class="entry">
+            <label class="label" for="sPSZ">Szerokość[mm]:</label>
+            <div class="quantity">
+                <input class="left2" type="number" id="spsz" name="spsz" step="any">
+            </div>
+        </div>
+        
+        <div class="entry">
+            <label class="label" for="rd">Długość [mm]:</label>
+            <div class="quantity">
+                <input class="left2" type="number" id="szd" name="szd" step="any">
+            </div>
+        </div>
+        
+        <div class="btn2">
+            <button class="calculate" type="submit" style="border: none;"><i class="fa-solid fa-calculator fa-5x"></i><br>Oblicz</button>
+            </div>
+    </div>
     
+</div>
     
     </form>    
     </div>
@@ -442,7 +526,13 @@ h4{
         </div>
     </div>
 </div>
-
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
 
             
 
@@ -452,20 +542,58 @@ function showForm(formId) {
   var form1 = document.getElementById("formB");
   var form2 = document.getElementById("formW");
   var form3 = document.getElementById("formR");
+  var form4 = document.getElementById("formRK");
+  var form5 = document.getElementById("formPP");
+  var form6 = document.getElementById("formPSZ");
 
   if (formId === 'formB') {
     form1.style.display = "block";
     form2.style.display = "none";
     form3.style.display = "none";
+    form4.style.display = "none";
+    form5.style.display = "none";
+    form6.style.display = "none";
   } else if (formId === 'formW') {
     form1.style.display = "none";
     form2.style.display = "block";
     form3.style.display = "none";
+    form4.style.display = "none";
+    form5.style.display = "none";
+    form6.style.display = "none";
   } else if(formId === 'formR') {
     form1.style.display = "none";
     form2.style.display = "none";
     form3.style.display = "block";
+    form4.style.display = "none";
+    form5.style.display = "none";
+    form6.style.display = "none";
+  }
+    else if(formId === 'formRK') {
+    form1.style.display = "none";
+    form2.style.display = "none";
+    form3.style.display = "none";
+    form4.style.display = "block";
+    form5.style.display = "none";
+    form6.style.display = "none";
+  }
+  else if(formId === 'formPP') {
+    form1.style.display = "none";
+    form2.style.display = "none";
+    form3.style.display = "none";
+    form4.style.display = "none";
+    form5.style.display = "block";
+    form6.style.display = "none";
+ }
+else if(formId === 'formPSZ') {
+    form1.style.display = "none";
+    form2.style.display = "none";
+    form3.style.display = "none";
+    form4.style.display = "none";
+    form5.style.display = "none";
+    form6.style.display = "block";
 }}
+
+
 </script>
 
 {% endblock %}

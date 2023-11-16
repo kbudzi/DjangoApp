@@ -88,7 +88,7 @@ if os.getenv('DJANGO_ENV') == 'production':
             'ENGINE': 'django.db.backends.mysql',
             'NAME': '25821_DjangoApp',
             'USER': '25821_DjangoApp',
-            'PASSWORD': 'zaq1@WSX',
+            'PASSWORD': config('SECRET_KEY2'),
             'HOST': 'localhost',
             'PORT': '',
         }

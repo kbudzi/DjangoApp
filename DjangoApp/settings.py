@@ -2,6 +2,9 @@ import os
 from django.db import connection
 from decouple import config
 from django.contrib.messages import constants as messages
+import pymysql
+pymysql.install_as_MySQLdb()
+from dj_database_url import parse as dburl
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -79,14 +82,24 @@ WSGI_APPLICATION = 'DjangoApp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if os.getenv('DJANGO_ENV') == 'production':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': '25821_DjangoApp',
+            'USER': '25821_DjangoApp',
+            'PASSWORD': 'zaq1@WSX',
+            'HOST': 'localhost',
+            'PORT': '',
+        }
     }
-}
-
-
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 
 

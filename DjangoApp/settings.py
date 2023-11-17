@@ -5,6 +5,7 @@ from django.contrib.messages import constants as messages
 import pymysql
 pymysql.install_as_MySQLdb()
 from dj_database_url import parse as dburl
+from django.db import connection
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -15,7 +16,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 SECRET_KEY=config('SECRET_KEY')
-
+SECRET_KEY2=config('SECRET_KEY2')
+ENVPROD=config('ENVPROD')
 DEBUG= config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ["www.eoffer.pl","eoffer.pl", "127.0.0.1"]
@@ -82,17 +84,20 @@ WSGI_APPLICATION = 'DjangoApp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-if os.getenv('DJANGO_ENV') == 'production':
+
+if ENVPROD == 'production':
+    
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': '25821_DjangoApp',
             'USER': '25821_DjangoApp',
-            'PASSWORD': config('SECRET_KEY2'),
+            'PASSWORD': SECRET_KEY2,
             'HOST': 'localhost',
             'PORT': '',
         }
     }
+    
 else:
     DATABASES = {
         'default': {
@@ -102,6 +107,8 @@ else:
     }
 
 
+print(SECRET_KEY2)
+print(ENVPROD)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
